@@ -1,0 +1,118 @@
+#!/bin/bash
+
+
+# Joe Arose  big_bass 12-14-2010 last update 11-1-2011
+# call this  auto-build-compile-bacon2
+# auto download compile install
+# so you can easily update when needed
+
+# thanks "mechanic" for the speed tip  using bacon instead of bacon.bash for compiling
+
+# thanks seaside for the bash version test
+
+BASHV=$(bash --version | head -1)
+VN=$(echo $BASHV | cut -f1 -d. | sed 's/^.*\(.\)$/\1/')
+[ $VN -lt 4 ] && Xdialog --title "bash version test " \
+--infobox "\nBash Version Problem $BASHV installed
+---------------> Bash must be version 4 or above for BaCon <-------------------" "\n" 0 0
+
+
+
+
+
+#   =====================================
+#    downoad ,compile and install BaCon
+#   =====================================
+
+
+Xdialog --wrap --title "bacon instlaller" \
+--yesno "Do you want to install bacon  " 0 0
+
+case $? in
+0)
+echo "Yes chosen."
+
+mkdir -p /usr/share/BaCon/old-version-saved
+mkdir -p /usr/share/BaCon/
+cd /usr/share/BaCon/
+
+mv  bacon.bash* bacon* hug.bac* hug_imports* bacon.lang* bacon.* *.c *.h *.log /usr/share/BaCon/old-version-saved || true
+
+# bacon.bash
+xterm  -geometry 40x30+150+40 -e wget -N http://www.basic-converter.org/stable/bacon.bash
+chmod a+x bacon.bash
+
+# bacon.bac
+xterm  -geometry 40x30+150+40 -e wget -N http://www.basic-converter.org/stable/bacon.bac
+chmod a+x bacon.bac
+
+# fix for bash if you have a different version you compiled
+# depends on the replace app
+#replace '#!/usr/bin/env bash' '#!/bin/bash'  bacon.bash
+
+# use sed (#!/usr/bin/env bash change to #!/bin/bash)
+sed -i 's/\#\!\/usr\/bin\/env bash/\#\!\/bin\/bash/' /usr/share/BaCon/bacon.bash
+
+
+# much faster with a pre installed bacon ( use this if you have bacon installed )
+# to compile a fresh bacon binary with a pre installed bacon
+#xterm  -geometry 40x30+150+40 -e bacon bacon.bac
+
+# very slow *without* a pre installed bacon  (default for a safety )
+# to compile a fresh bacon binary *without* a pre installed bacon
+xterm  -geometry 40x30+150+40 -e '. /usr/share/BaCon/bacon.bash bacon.bac'
+
+
+
+# copy bacon bin into the path
+cp bacon /usr/sbin
+
+
+# hug.bac
+xterm  -geometry 40x30+150+40 -e wget -N http://www.basic-converter.org/hug.bac
+
+
+# hug_imports.bac
+xterm  -geometry 40x30+150+40 -e wget -N http://www.basic-converter.org/hug_imports.bac
+
+# auto edit the hug_imports.bac  must have the replace command installed
+#replace  'CONST HUG_lib$ = "./hug.so"' 'CONST HUG_lib$ = "/usr/lib/libhug.so"' hug_imports.bac
+
+# auto edit the hug_imports.bac
+sed -i 's/\.\/hug.so/\/usr\/lib\/libhug.so/' hug_imports.bac
+
+
+
+# use the new bacon binary to make the new libhug.so
+cp hug.bac libhug.bac
+xterm  -geometry 40x30+150+40 -e bacon -f libhug.bac
+
+md5sum libhug.so >md5sum_libhug.txt
+
+# add a md5sum in the sources
+MD=$(<md5sum_libhug.txt)
+sed -i "2a \'$MD " hug_imports.bac
+
+
+cp libhug.so /usr/lib
+
+# bacon.lang
+xterm  -geometry 40x30+150+40 -e wget -N http://www.basic-converter.org/bacon.lang
+
+Xdialog --title "Complete" \
+--infobox "\nInstalling bacon has finished.\n" 0 0 3000
+#clean up C crap
+rm -f *.c
+rm -f *.h
+
+;;
+1)
+echo "No chosen."
+exit
+;;
+255)
+echo "Box closed."
+exit
+;;
+
+esac
