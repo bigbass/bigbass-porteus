@@ -655,7 +655,7 @@ DISPLAY
 
 [http://bigbass-porteus.googlecode.com/files/bacon-button_icon_actions4.png]
 
- *This uses kde icons so may not work with your desktop * _ I used the distro slackware 14 so that's what it was tested on _
+ * This uses kde icons so may not work with your desktop *  I used the distro slackware 14 so that's what it was tested on 
  just point the icons to ones you have the idea is what is important
  it has tool-tips also
 *updated code for kde4*
@@ -932,7 +932,8 @@ DISPLAY
 
 ||*Example: bacon-listbox.bac*||
 
-{{{ ' bacon-listbox.bac
+{{{
+' bacon-listbox.bac
 
 ' Include the files for making a GUI.
 INCLUDE "hug.bac"
