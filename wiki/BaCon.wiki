@@ -126,7 +126,7 @@ DISPLAY
 
 ----
 
-== MARKUP[#text_attributes  ] ==
+== MARKUP ==
 
 [http://bigbass-porteus.googlecode.com/files/bacon-markup.png]
 
@@ -184,7 +184,7 @@ DISPLAY
 
 ----
 
-== INPUT2[#text_input  ] ==
+== INPUT2 ==
 
 [http://bigbass-porteus.googlecode.com/files/input-from-file.png]
 
@@ -460,7 +460,7 @@ DISPLAY
 
 ----
 
-*ACTION-TYPES*
+ == ACTION-TYPES ==
 
 [http://bigbass-porteus.googlecode.com/files/bacon-action-types.png]
  equivalent gtkdialog 01.02-button_action_types
@@ -1338,7 +1338,7 @@ DISPLAY
 
 ----
 
-* HSLIDER*
+ == HSLIDER ==
 
 [http://bigbass-porteus.googlecode.com/files/bacon-hslider.png]
 
@@ -1398,7 +1398,7 @@ DISPLAY
 
 ----
 
-*  **PROGRESSBAR*
+ == PROGRESSBAR ==
 
 Pjot has made a new progress bar demo that he has added to the Hug documentation
 
@@ -1451,7 +1451,7 @@ DISPLAY
 
 ----
 
-*CANVAS*
+ == CANVAS ==
 
 [http://bigbass-porteus.googlecode.com/files/canvas.png]* 
 
@@ -1528,7 +1528,7 @@ DISPLAY
 [#TOP Back to top of document]
 ----
 
-* **SPINNER*
+ == SPINNER ==
 
 [http://bigbass-porteus.googlecode.com/files/spinner-peter.png]
 
