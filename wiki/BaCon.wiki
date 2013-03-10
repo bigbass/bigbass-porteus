@@ -30,7 +30,8 @@ Getting started with sample widgets
 *  Example code: hello.bac*
 
 <blockquote style="color: lightgrey; border: solid thin gray;">
- {{{' BaCon / HUG Hello World
+   {{{
+' BaCon / HUG Hello World
 ' hello.bac
 ' Include the files for making a GUI.
 INCLUDE "hug.bac"
