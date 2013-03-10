@@ -27,10 +27,11 @@ Getting started with sample widgets
 == HELLO ==
 
 [http://bigbass-porteus.googlecode.com/files/hello.png]
-*  Example code: hello.bac*
-[[code]]
 
-#!text
+||*  Example code: hello.bac*||
+
+
+{{{
 ' BaCon / HUG Hello World
 ' hello.bac
 ' Include the files for making a GUI.
@@ -64,8 +65,10 @@ ATTACH( Mainwin, My_chk, 155, 60 )
 '8.)Make button do something
 CALLBACK( My_chk, QUIT)
 DISPLAY 
-[[code]]
 
+
+
+}}}
 
 
 
@@ -79,9 +82,45 @@ DISPLAY
 
 [http://bigbass-porteus.googlecode.com/files/bacon-equiv.png]
 
-*Example code: static.bac*
+||*Example code: static.bac*||
 
-|| ' static.bac  ' Include the files for making a GUI.  INCLUDE "hug.bac"  INIT  ' 1.) Create your main working window, 250 pixels wide x 100 pixels high  Mainwin = WINDOW( "BaCon Title Bar", 250, 100 )  ' 2. ) Create a label Hello BaCon! with text, 150 x 30  My_label = MARK( "This is static text", 150, 30 )  ' 3.) Attach the label to the main window  ATTACH( Mainwin, My_label, 50, 20 )  ' 4.) Create a button  My_btn = STOCK( "gtk-yes", 80, 25)  ' 5.) Attach button to the main window  ATTACH( Mainwin, My_btn, 10, 60 )  ' 6.) Make button do something  CALLBACK( My_btn, QUIT)  '7.) Create a button.  My_chk = STOCK("gtk-cancel", 80, 25)  ATTACH( Mainwin, My_chk, 155, 60 )  '8.)Make button do something  CALLBACK( My_chk, QUIT)  DISPLAY ||
+
+{{{
+' static.bac
+' Include the files for making a GUI.
+INCLUDE "hug.bac"
+INIT
+
+
+' 1.) Create your main working window, 250 pixels wide x 100 pixels high
+Mainwin = WINDOW( "BaCon Title Bar", 250, 100 )
+
+
+' 2. ) Create a label Hello BaCon! with text, 150 x 30
+My_label = MARK( "This is static text", 150, 30 )
+
+' 3.) Attach the label to the main window
+ATTACH( Mainwin, My_label, 50, 20 )
+
+' 4.) Create a button
+My_btn = STOCK( "gtk-yes", 80, 25)
+
+' 5.) Attach button to the main window
+ATTACH( Mainwin, My_btn, 10, 60 )
+
+' 6.) Make button do something
+CALLBACK( My_btn, QUIT)
+
+'7.) Create a button.
+My_chk = STOCK("gtk-cancel", 80, 25)
+ATTACH( Mainwin, My_chk, 155, 60 )
+
+'8.)Make button do something
+CALLBACK( My_chk, QUIT)
+DISPLAY 
+
+}}}
+
 
 [#TOP Back to top of document]
 
@@ -91,9 +130,55 @@ DISPLAY
 
 [http://bigbass-porteus.googlecode.com/files/bacon-markup.png]
 
-*Example code:� markup-01.bac*
+||*Example code: markup-01.bac*||
 
-|| ' markup-01.bac  ' equivilent gtkdialog 00.01-text_attributes  ' With SUB routine example  INCLUDE "hug.bac"  INIT  ' -------------------------------  SUB LAUNCH_APP()  ' ------------------------------  ��� ' TEXT changes the text of a widget/My_label  ��� TEXT( My_label, result$)  END SUB  ' Create your main working window, 275 pixels wide x 100 pixels high  Mainwin = WINDOW( " BaCon Using markup", 275, 100 )  result$ = CONCAT$("<u>This is underlined text</u>")  �' Create a label with text, 180 x 30  My_label = MARK( "<span color=\"blue\">Color can be used too</span> ", 180, 30 )  My_label2 = MARK( "<b>Use-markup</b> , which is cool.", 180, 30 )  ' Attach the label to the main window  ' at coordinates 50x 20y from top left corner  ATTACH( Mainwin, My_label, 50, 10 )  ATTACH( Mainwin, My_label2, 50, 35 )  ' --- BUTTONS ---  My_btn = BUTTON( "Launch", 100, 25)  ATTACH( Mainwin, My_btn, 5, 60 )  ' Make an exit button  My_close = STOCK("gtk-close", 100, 25)  ATTACH(Mainwin, My_close, 140, 60)  ' --- CALLBACKS ---  CALLBACK( My_btn, LAUNCH_APP)  CALLBACK( My_close, QUIT)  DISPLAY ||
+{{{
+
+' markup-01.bac
+' equivilent gtkdialog 00.01-text_attributes
+' With SUB routine example
+
+INCLUDE "hug.bac"
+INIT
+
+
+' -------------------------------
+SUB LAUNCH_APP()
+' ------------------------------
+    ' TEXT changes the text of a widget/My_label
+    TEXT( My_label, result$)
+END SUB
+
+
+' Create your main working window, 275 pixels wide x 100 pixels high
+Mainwin = WINDOW( " BaCon Using markup", 275, 100 )
+result$ = CONCAT$("<u>This is underlined text</u>")
+
+ ' Create a label with text, 180 x 30
+
+My_label = MARK( "<span color=\"blue\">Color can be used too</span> ", 180, 30 )
+My_label2 = MARK( "<b>Use-markup</b> , which is cool.", 180, 30 )
+
+' Attach the label to the main window
+' at coordinates 50x 20y from top left corner
+ATTACH( Mainwin, My_label, 50, 10 )
+ATTACH( Mainwin, My_label2, 50, 35 )
+
+' --- BUTTONS ---
+My_btn = BUTTON( "Launch", 100, 25)
+ATTACH( Mainwin, My_btn, 5, 60 )
+
+' Make an exit button
+My_close = STOCK("gtk-close", 100, 25)
+ATTACH(Mainwin, My_close, 140, 60)
+
+' --- CALLBACKS ---
+CALLBACK( My_btn, LAUNCH_APP)
+CALLBACK( My_close, QUIT)
+
+DISPLAY
+
+}}}
 
 [#TOP Back to top of document]
 
