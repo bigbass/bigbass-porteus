@@ -29,8 +29,8 @@ Getting started with sample widgets
 [http://bigbass-porteus.googlecode.com/files/hello.png]
 *  Example code: hello.bac*
 
-<blockquote style="color: lightgrey; border: solid thin gray;">
-   {{{
+ {{{
+#!text
 ' BaCon / HUG Hello World
 ' hello.bac
 ' Include the files for making a GUI.
@@ -65,7 +65,7 @@ ATTACH( Mainwin, My_chk, 155, 60 )
 CALLBACK( My_chk, QUIT)
 DISPLAY 
 }}}
-</blockquote>
+
 
 
 
