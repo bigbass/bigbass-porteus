@@ -14,7 +14,7 @@ Getting started with sample widgets
 
 || The widgets ||
 || [#HELLO HELLO] || [#ICON-KDE4 ICON-KDE4] || [#SPINBOX SPINBOX] ||
-|| [#STATIC_TEXT_ TEXT] || [#RADIOBOX RADIOBOX] || [#VSLIDER VSLIDER] ||
+|| [#TEXT] || [#RADIOBOX RADIOBOX] || [#VSLIDER VSLIDER] ||
 || [#MARKUP MARKUP] || [#LISTBOX LISTBOX] || [#HSLIDER HSLIDER] ||
 || [#INPUT2_ INPUT2] || [#COMBO-BOX COMBO-BOX] || [#PROGRESSBAR PROGRESSBAR] ||
 || [#BUTTON1 BUTTON1] || [#MSGDIALOG MSGDIALOG] || [#CANVAS CANVAS] ||
@@ -78,7 +78,7 @@ DISPLAY
 
 ----
 
-== STATIC TEXT ==
+== TEXT ==
 
 [http://bigbass-porteus.googlecode.com/files/bacon-equiv.png]
 
