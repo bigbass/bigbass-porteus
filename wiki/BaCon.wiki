@@ -28,8 +28,8 @@ Getting started with sample widgets
 
 [http://bigbass-porteus.googlecode.com/files/hello.png]
 *  Example code: hello.bac*
+[[code]]
 
- {{{
 #!text
 ' BaCon / HUG Hello World
 ' hello.bac
@@ -64,7 +64,7 @@ ATTACH( Mainwin, My_chk, 155, 60 )
 '8.)Make button do something
 CALLBACK( My_chk, QUIT)
 DISPLAY 
-}}}
+[[code]]
 
 
 
