@@ -10,7 +10,7 @@ Getting started with sample widgets
  how to code it with BaCon for those that have used gtkdialog
  before this would help you see how it also can be done with Bacon / HUG
 
-*TOP*
+*TOP*    Sorry for the odd color highlighting wiki doesn't have BaCon yet
 
 || The widgets ||
 || [#HELLO HELLO] || [#ICON-KDE4 ICON-KDE4] || [#SPINBOX SPINBOX] ||
@@ -188,9 +188,54 @@ DISPLAY
 
 [http://bigbass-porteus.googlecode.com/files/input-from-file.png]
 
-== *Example code: *text_input-02.bac ==
 
-|| ' text_input-02.bac  ' just view a file   ' Include the files for making a GUI.  INCLUDE "hug.bac"  INIT  ' 1.) Create your main working window,400 pixels wide x 300 pixels high  Mainwin = WINDOW( "BaCon input file ", 400, 300 )  EDIT_BOX = EDIT(370, 250)  ATTACH( Mainwin, EDIT_BOX, 10, 10 )  ' Create a button.  My_chk = STOCK("gtk-quit", 80, 25)  ATTACH( Mainwin, My_chk, 295, 265 )  ' Make button do something  CALLBACK( My_chk, QUIT)  '--- get the display info using a system call ---'  '--- the bash command "date" is used as input ---'  result_input$ = EXEC$("cat /etc/hosts.allow")  result_input2$ = EXEC$("date")  TEXT(EDIT_BOX, NL$)  TEXT(EDIT_BOX, "---------input from file /etc/hosts.allow------------")  TEXT(EDIT_BOX, NL$)  TEXT(EDIT_BOX, result_input$)  TEXT(EDIT_BOX, NL$)  TEXT(EDIT_BOX, "---------input from command date------------")  TEXT(EDIT_BOX, NL$)  TEXT(EDIT_BOX, NL$)  TEXT(EDIT_BOX, result_input2$)  DISPLAY ||
+||  *Example code: *text_input-02.bac || 
+
+{{{
+' text_input-02.bac
+' just view a file
+' Include the files for making a GUI.
+
+INCLUDE "hug.bac"
+INIT
+
+
+' 1.) Create your main working window,400 pixels wide x 300 pixels high
+Mainwin = WINDOW( "BaCon input file ", 400, 300 )
+
+
+EDIT_BOX = EDIT(370, 250)
+ATTACH( Mainwin, EDIT_BOX, 10, 10 )
+
+
+' Create a button.
+My_chk = STOCK("gtk-quit", 80, 25)
+ATTACH( Mainwin, My_chk, 295, 265 )
+
+' Make button do something
+CALLBACK( My_chk, QUIT)
+
+
+'--- get the display info using a system call ---'
+'--- the bash command "date" is used as input ---'
+
+
+result_input$ = EXEC$("cat /etc/hosts.allow")
+result_input2$ = EXEC$("date")
+TEXT(EDIT_BOX, NL$)
+TEXT(EDIT_BOX, "---------input from file /etc/hosts.allow------------")
+TEXT(EDIT_BOX, NL$)
+TEXT(EDIT_BOX, result_input$)
+TEXT(EDIT_BOX, NL$)
+TEXT(EDIT_BOX, "---------input from command date------------")
+TEXT(EDIT_BOX, NL$)
+TEXT(EDIT_BOX, NL$)
+TEXT(EDIT_BOX, result_input2$)
+
+DISPLAY
+
+
+}}}
 
 [#TOP Back to top of document]
 
