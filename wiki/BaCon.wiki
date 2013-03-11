@@ -655,14 +655,15 @@ DISPLAY
 
 [http://bigbass-porteus.googlecode.com/files/bacon-button_icon_actions4.png]
 
- * This uses kde icons so may not work with your desktop *  I used the distro slackware 14 so that's what it was tested on 
- just point the icons to ones you have the idea is what is important
- it has tool-tips also
-*updated code for kde4*
+ *This uses kde icons so may not work with your desktop*  
+  I used the distro   slackware 14 so that's what it was tested on 
+  just point the icons to ones you have the idea is what is important
+  it has tool-tips also
+ *updated code for kde4*
 
- ' Note you may not have kde installed so use other icons for images
+  Note you may not have kde installed so use other icons for images
 
- '/usr/share/icons/default.kde4/32x32
+ /usr/share/icons/default.kde4/32x32
 
 || *Example code: **bacon-icon-kde4.bac*|| 
 
@@ -1028,14 +1029,14 @@ DISPLAY
 [http://bigbass-porteus.googlecode.com/files/bacon-help1.png]
 
 [http://bigbass-porteus.googlecode.com/files/bacon-help2.png]
- clicking the Help button launches this
+    clicking the Help button launches this
 
 || *Example: bacon-msgdialog.bac*|| 
 
 {{{
-' bacon-msgdialog.bac
+'bacon-msgdialog.bac
 
-' Include the files for making a GUI.
+'Include the files for making a GUI.
 INCLUDE "hug.bac"
 INIT
 
@@ -1086,7 +1087,8 @@ DISPLAY
 [http://bigbass-porteus.googlecode.com/files/bacon-edit.png]
 
  Note there are two examples here
- this is like the input file example but has a call back to grab the text in the box
+ this is like the input file example but has a call back 
+ to grab the text in the box
  and take input from a file
 
 ||*Example: bacon-edit.bac*||
@@ -1196,9 +1198,11 @@ DISPLAY
 
 == RESIZE-WINDOW ==
 
-== [http://bigbass-porteus.googlecode.com/files/resize.png] ==
+  [http://bigbass-porteus.googlecode.com/files/resize.png]
 
-== Here is a resizable window using the PROPERTY option.  P.S simple but I didn't know you could do this so easily ==
+
+  Here is a resizable window using the PROPERTY option.
+  P.S simple but I didn't know you could do this so easily 
 
 {{{
 'resize-window.bac
@@ -1219,7 +1223,7 @@ DISPLAY
 
 == SPINBOX ==
 
-== [http://bigbass-porteus.googlecode.com/files/bacon-spin.png] ==
+[http://bigbass-porteus.googlecode.com/files/bacon-spin.png]
 
 ==  ==
 
@@ -1400,31 +1404,35 @@ DISPLAY
 
  == PROGRESSBAR ==
 
-Pjot has made a new progress bar demo that he has added to the Hug documentation
+  Pjot has made a new progress bar demo that he has added
+  to the Hug documentation
 
-This is a more advanced widget and a little more complex for those getting started
- with BaCon because it uses some new commands SET, GET, TIMEOUT and RETURN TRUE/FALSE
+  This is a more advanced widget and a little 
+  more complex for those getting started
+  with BaCon because it uses some new commands 
+  SET, GET, TIMEOUT and RETURN TRUE/FALSE
 
 [http://bigbass-porteus.googlecode.com/files/progressbar-demo.png]
 -------------------------------------------------------------------------------
  some help to explain code and other options
 *TEXT(widget, "text")*
 
-Widget  ......................... Behavior
+ Widget  ......................... Behavior
  Progressbar .................. Sets the text in the progressbar
 
- *not used but this allows numbers to be seen instead of the word "demo"
+*not used but this allows numbers to be seen instead of the word "demo"
  TEXT(pb, STR$(x))
 
 *SET(widget, value)*
  SET(pb, x) this gets the value of x in the progressbar
 
-*GET *
+*GET*
  PRINT GET(pb) this echos out to the terminal the number value
 
 || *Example: bacon-progressbar.bac*|| 
 
 {{{
+
 'progressbar-demo.bac
 INCLUDE "hug.bac"
 DECLARE pb, x, offset
@@ -1534,7 +1542,8 @@ DISPLAY
 
 
  The next example comes from Pjot
- I asked Peter to convert the other two functions of the spinner demo (vovchik did) to 100% HUG
+ I asked Peter to convert the other two functions 
+ of the spinner demo (vovchik did) to 100% HUG
 
 *spinner_INCLUDE.bac* doesn't get compiled it is a compile time dependency
  just have it in the same place as *spinner-HUG-convertered.bac* when
@@ -1647,7 +1656,7 @@ DISPLAY
 
 [http://bigbass-porteus.googlecode.com/files/dynamic-combo.png]
 
-reads a text file into the combobox
+ reads a text file into the combobox
  place it in /tmp
 
 [http://basic-converter.proboards.com/index.cgi?action=downloadattachmentpage&board=doc&thread=263&post=2266 biglist2.txt]
@@ -1791,11 +1800,3 @@ DISPLAY
 ----
 
 [#TOP Back to top of document]
-
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
