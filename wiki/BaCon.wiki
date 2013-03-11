@@ -1087,7 +1087,9 @@ DISPLAY
 [http://bigbass-porteus.googlecode.com/files/bacon-edit.png]
 
  Note there are two examples here
- this is like the input file example but has a call back 
+
+ this is like the input file example
+ but has a call back 
  to grab the text in the box
  and take input from a file
 
