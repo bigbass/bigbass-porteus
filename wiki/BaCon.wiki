@@ -655,11 +655,11 @@ DISPLAY
 
 [http://bigbass-porteus.googlecode.com/files/bacon-button_icon_actions4.png]
 
- *This uses kde icons so may not work with your desktop*  
+  This uses kde icons so may not work with your desktop 
   I used the distro   slackware 14 so that's what it was tested on 
   just point the icons to ones you have the idea is what is important
   it has tool-tips also
- *updated code for kde4*
+  updated code for kde4*
 
   Note you may not have kde installed so use other icons for images
 
@@ -1415,18 +1415,18 @@ DISPLAY
 [http://bigbass-porteus.googlecode.com/files/progressbar-demo.png]
 -------------------------------------------------------------------------------
  some help to explain code and other options
-*TEXT(widget, "text")*
+ TEXT(widget, "text")
 
  Widget  ......................... Behavior
  Progressbar .................. Sets the text in the progressbar
 
-*not used but this allows numbers to be seen instead of the word "demo"
+ not used but this allows numbers to be seen instead of the word "demo"
  TEXT(pb, STR$(x))
 
-*SET(widget, value)*
+ SET(widget, value)
  SET(pb, x) this gets the value of x in the progressbar
 
-*GET*
+ GET
  PRINT GET(pb) this echos out to the terminal the number value
 
 || *Example: bacon-progressbar.bac*|| 
