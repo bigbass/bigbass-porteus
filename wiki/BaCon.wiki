@@ -29,6 +29,9 @@ Getting started with sample widgets
 
 ----
 
+
+
+
 == HELLO ==
 
 [http://bigbass-porteus.googlecode.com/files/hello.png]
@@ -36,7 +39,9 @@ Getting started with sample widgets
 ||*  Example code: hello.bac*||
 
 
-{{{
+<code language="xml">
+
+
 ' BaCon / HUG Hello World
 ' hello.bac
 ' Include the files for making a GUI.
@@ -73,7 +78,7 @@ DISPLAY
 
 
 
-}}}
+</code>
 
 
 
@@ -89,8 +94,7 @@ DISPLAY
 
 ||*Example code: static.bac*||
 
-
-{{{
+<code language="xml">
 ' static.bac
 ' Include the files for making a GUI.
 INCLUDE "hug.bac"
@@ -124,7 +128,7 @@ ATTACH( Mainwin, My_chk, 155, 60 )
 CALLBACK( My_chk, QUIT)
 DISPLAY 
 
-}}}
+</code>
 
 
 [#TOP Back to top of document]
@@ -137,7 +141,7 @@ DISPLAY
 
 ||*Example code: markup-01.bac*||
 
-{{{
+<code language="xml">
 
 ' markup-01.bac
 ' equivilent gtkdialog 00.01-text_attributes
@@ -183,7 +187,7 @@ CALLBACK( My_close, QUIT)
 
 DISPLAY
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -196,7 +200,7 @@ DISPLAY
 
 ||  *Example code: *text_input-02.bac || 
 
-{{{
+<code language="xml">
 ' text_input-02.bac
 ' just view a file
 ' Include the files for making a GUI.
@@ -240,7 +244,7 @@ TEXT(EDIT_BOX, result_input2$)
 DISPLAY
 
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -252,7 +256,7 @@ DISPLAY
 
 || *Example code: button-1.00.bac *|| 
 
-{{{
+<code language="xml">
 ' buttons-1.00.bac
 ' equivalent gtkdialog 01.00-button
 ' Include the files for making a GUI.
@@ -381,7 +385,7 @@ CALLBACK( My_chk, QUIT)
 DISPLAY
 
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -394,7 +398,7 @@ DISPLAY
 || *Example code: checkbox.bac*|| 
 
 
-{{{
+<code language="xml">
 ' checkbox.bac
 
 ' Include the files for making a GUI.
@@ -421,7 +425,7 @@ CALLBACK(My_checkbox, checkbox_demo)
 
 DISPLAY 
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -433,7 +437,7 @@ DISPLAY
 
 ||*Example code: bacon-entry.bac*||
 
-{{{
+<code language="xml">
 ' bacon-entry.bac
 
 ' Include the files for making a GUI.
@@ -459,7 +463,7 @@ CALLBACK(My_entry, entry_demo)
 
 DISPLAY
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -472,7 +476,7 @@ DISPLAY
 
 || *Example code: bacon-action-types.bac*|| 
 
-{{{
+<code language="xml">
 ' bacon-action-types.bac
 ' equivalent gtkdialog 01.02-button_action_types
 ' Include the files for making a GUI.
@@ -648,7 +652,7 @@ ATTACH( Mainwin, My_chk, 165, 145 )
 CALLBACK( My_chk, QUIT)
 DISPLAY 
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -672,7 +676,7 @@ DISPLAY
 
 || *Example code: **bacon-icon-kde4.bac*|| 
 
-{{{
+<code language="xml">
 ' BaCon
 ' Add images as buttons and tool-tips 3x5 format using 32x32 pixel icons
 ' bacon-icon-kde4.bac
@@ -885,7 +889,7 @@ ATTACH(Mainwin, Close_btn, 290, 365)
 CALLBACK(Close_btn, QUIT)
 
 DISPLAY
-}}}
+</code>
 
 [#TOP Back to top of document]
 ----
@@ -896,7 +900,7 @@ DISPLAY
 
 || *Example code: bacon-radio.box*|| 
 
-{{{
+<code language="xml">
 ' bacon-radiobox.bac
 
 ' Include the files for making a GUI.
@@ -926,7 +930,7 @@ CALLBACK(My_radiobox, radiobox_demo)
 
 DISPLAY
 
- }}}
+ </code>
 
 [#TOP Back to top of document]
 
@@ -938,7 +942,7 @@ DISPLAY
 
 ||*Example: bacon-listbox.bac*||
 
-{{{
+<code language="xml">
 ' bacon-listbox.bac
 
 ' Include the files for making a GUI.
@@ -974,7 +978,7 @@ CALLBACK(My_listbox, My_listbox_demo)
 
 DISPLAY
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -988,7 +992,7 @@ DISPLAY
 
 || *Example: bacon-combobox.bac*|| 
 
-{{{
+<code language="xml">
 ' bacon-combobox.bac
 
 ' Include the files for making a GUI.
@@ -1023,7 +1027,7 @@ CALLBACK(My_combobox, My_combobox_demo)
 
 DISPLAY
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -1038,7 +1042,7 @@ DISPLAY
 
 || *Example: bacon-msgdialog.bac*|| 
 
-{{{
+<code language="xml">
 'bacon-msgdialog.bac
 
 'Include the files for making a GUI.
@@ -1081,7 +1085,7 @@ msgbox1 = MSGDIALOG(CONCAT$("First line \n", \
 CALLBACK(msgbox1, close_dialog)
 DISPLAY
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -1100,7 +1104,7 @@ DISPLAY
 
 ||*Example: bacon-edit.bac*||
 
-{{{
+<code language="xml">
 ' bacon-edit.bac
 
 ' Include the files for making a GUI.
@@ -1140,7 +1144,7 @@ ATTACH( Mainwin, My_chk, 255, 165 )
 CALLBACK( My_chk, QUIT)
 DISPLAY
 
- }}}
+ </code>
 
 == EDIT2 ==
 
@@ -1150,7 +1154,7 @@ DISPLAY
 
 || *Example: bacon-edit2.bac*|| 
 
-{{{
+<code language="xml">
 ' bacon-edit2.bac
 
 ' Include the files for making a GUI.
@@ -1198,7 +1202,7 @@ TEXT(EDIT_BOX, NL$)
 TEXT(EDIT_BOX, result_input2$)
 DISPLAY
 
-}}}
+</code>
 
 * *[#TOP Back to top of document]
 ----
@@ -1211,7 +1215,7 @@ DISPLAY
   Here is a resizable window using the PROPERTY option.
   P.S simple but I didn't know you could do this so easily 
 
-{{{
+<code language="xml">
 'resize-window.bac
 
 INCLUDE "hug.bac"
@@ -1222,7 +1226,7 @@ INIT
     
 DISPLAY
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -1236,7 +1240,7 @@ DISPLAY
 
 ||  *Example: bacon-spin.bac*|| 
 
-{{{
+<code language="xml">
 
 '  bacon-spin.bac
 
@@ -1281,7 +1285,7 @@ CALLBACK(GET_NUMBER, My_SPINBOX)
 
 DISPLAY
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -1293,7 +1297,7 @@ DISPLAY
 
 || *Example: bacon-vslider.bac* || 
 
-{{{
+<code language="xml">
 
 ' bacon-vslider.bac
 
@@ -1342,7 +1346,7 @@ CALLBACK(GET_NUMBER, My_VSLIDER)
 
 DISPLAY
 
-}}}
+</code>
 
 
 [#TOP Back to top of document]
@@ -1355,7 +1359,7 @@ DISPLAY
 
 ||*Example: bacon-hslider.bac* ||
 
-{{{
+<code language="xml">
 ' bacon-hslider.bac
 
 ' Include the files for making a GUI.
@@ -1403,7 +1407,7 @@ CALLBACK(GET_NUMBER, My_HSLIDER)
 
 DISPLAY
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -1438,7 +1442,7 @@ DISPLAY
 
 || *Example: bacon-progressbar.bac*|| 
 
-{{{
+<code language="xml">
 
 'progressbar-demo.bac
 INCLUDE "hug.bac"
@@ -1460,7 +1464,7 @@ ATTACH(win, pb, 0, 0)
 TIMEOUT(100, set_value)
 DISPLAY
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -1472,7 +1476,7 @@ DISPLAY
 
 || * Example: bacon-canvas.bac*||
 
-{{{
+<code language="xml">
 
 
 'bacon-canvas.bac
@@ -1538,7 +1542,7 @@ INIT
 DISPLAY
 
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 ----
@@ -1556,7 +1560,7 @@ DISPLAY
  just have it in the same place as *spinner-HUG-convertered.bac* when
  you compile
 
-{{{
+<code language="xml">
 'spinner_INCLUDE.bac
 INCLUDE "hug.bac", INIT, WINDOW, BUTTON, HUGLIB$, METHOD, REGISTER, SET, ATTACH, CALLBACK, QUIT, DISPLAY
 CONST gtk$ = HUGLIB$("gtk")
@@ -1601,11 +1605,11 @@ RETURN widget
 END FUNCTION
 
 
-}}}
+</code>
 
 ||*Example: spinner-HUG-convertered.bac* this gets compiled||
 
-{{{
+<code language="xml">
 'spinner-HUG-convertered.bac
 'depends on spinner_INCLUDE.bac
 
@@ -1654,7 +1658,7 @@ MK_GUI
 DISPLAY
 
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 ----
@@ -1670,7 +1674,7 @@ DISPLAY
 
 ||*Example code: bacon-combobox.bac*||
 
-{{{
+<code language="xml">
 ' bacon-combobox.bac
 
 ' Include the files for making a GUI.
@@ -1728,7 +1732,7 @@ CALLBACK(combo_choices, combo_choices_demo)
 
 DISPLAY 
 
-}}}
+</code>
 
 [#TOP Back to top of document]
 
@@ -1745,7 +1749,7 @@ source the binary to see the selected from the list
 
 || *Example code: bacon-listbox2.bac*|| 
 
-{{{
+<code language="xml">
 ' bacon-listbox2.bac
 
 ' Include the files for making a GUI.
@@ -1802,7 +1806,7 @@ CALLBACK(list_choices, list_choices_demo)
 DISPLAY
 
 
-}}}
+</code>
 
 ----
 
