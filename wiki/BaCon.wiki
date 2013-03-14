@@ -15,7 +15,7 @@ Getting started with sample widgets
  how to code it with BaCon for those that have used gtkdialog
  before this would help you see how it also can be done with Bacon / HUG
 
-*TOP*    Sorry for the odd color highlighting wiki doesn't have BaCon yet
+*TOP*    Sorry for the no color highlighting wiki doesn't have BaCon yet
 
 || The widgets ||
 || [#HELLO HELLO] || [#ICON-KDE4 ICON-KDE4] || [#SPINBOX SPINBOX] ||
