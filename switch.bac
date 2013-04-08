@@ -1,0 +1,85 @@
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+
+
+PROTO gtk_init
+PROTO gtk_window_new
+PROTO gtk_main
+PROTO gtk_main_quit
+PROTO g_signal_connect_data
+PROTO gtk_container_add
+PROTO gtk_widget_show_all
+PROTO gtk_switch_new
+PROTO gtk_window_set_title
+PROTO gtk_window_set_default_size 
+PROTO gtk_container_set_border_width
+PROTO gtk_switch_set_active 
+PROTO gtk_grid_set_column_spacing 
+PROTO gtk_grid_attach
+
+
+
+
+'=====================
+SUB exit_prog
+'=====================
+	gtk_main_quit
+END SUB
+
+
+
+
+'=====================
+SUB switch_clicked()
+'=====================
+	CLEAR
+	PRINT "switch button1"
+	SW1 = gtk_switch_get_active (switch1)
+	PRINT SW1
+END SUB
+
+
+
+
+
+gtk_init(0, 0)
+
+'---Create a window with a set title and default size.
+'---Also, set a border width for the amount of space
+'---to leave inside the window
+
+window = gtk_window_new ()
+gtk_window_set_title (window, "Switch Example")
+gtk_window_set_default_size (window, 300, 100)
+gtk_container_set_border_width (window, 10)
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+
+
+'---Create a label---'  
+label = gtk_label_new ("Title")
+
+
+'---Create a switch with a default active state  
+switch1 = gtk_switch_new ()
+gtk_switch_set_active (switch1, TRUE)
+
+
+'---Create a grid and set the column spacing,
+'---attach the label
+'---switch onto the grid 
+'---position them accordingly  
+grid = gtk_grid_new()
+gtk_grid_set_column_spacing (grid, 10)
+gtk_grid_attach (grid, label, 0, 0, 1, 1)
+gtk_grid_attach (grid, switch1, 1, 0, 1, 1)
+
+'---Connecting the clicked signal to the callback   
+g_signal_connect_data(switch1, "notify::active",switch_clicked, 0, 0, 0)
+
+
+gtk_container_add (window, grid)
+gtk_widget_show_all (window)
+gtk_main
+
+
