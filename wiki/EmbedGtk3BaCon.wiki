@@ -21,7 +21,7 @@ how to code it with BaCon
 || The widgets ||
 || [#CHECK CHECK] || [#SPINNER SPINNER] || [#RADIO RADIO] ||
 || [#TEXT TEXT] || [#SWITCH2 SWITCH2] || [#SWITCH SWITCH] ||
-|| [#LABEL LABEL] || [#NOTYET NOTYET] || [#NOTYET NOTYET] ||
+|| [#LABEL LABEL] || [#HELLO2 HELLO2] || [#NOTYET NOTYET] ||
 
 ----
 
@@ -747,6 +747,104 @@ gtk_main
 
 
 
+
+
+== HELLO2 ==
+
+ported from [http://www.cs.dartmouth.edu/~xy/cs23/gtk.html]
+
+||*Example code: hello2-gtk2-proto.bac*||
+
+<code language="xml">
+'--- set up for compiling embedded library GTK
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
+
+
+
+'--- this replaces the need for IMPORT. the TYPE is not needed
+'--- place all the functions that you will use here
+
+PROTO gtk_init
+PROTO gtk_window_new
+PROTO gtk_window_set_title
+PROTO g_signal_connect_data,
+PROTO g gtk_widget_show_all
+PROTO gtk_main
+PROTO gtk_main_quit
+
+
+' get the needed missing values
+GTK_WINDOW_TOPLEVEL = 0
+
+
+
+'===============
+SUB exit_prog
+'===============
+    gtk_main_quit
+END SUB
+
+
+
+    
+    gtk_init(0, 0)
+
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL)
+    gtk_window_set_title(window, "Hello World!")
+
+    /* Connect the main window to the destroy ---> replace with SUB exit_prog */
+    g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+    gtk_widget_show_all(window)        
+    
+    gtk_main
+
+
+
+</code>
+
+[#TOP Back to top of document]
+
+
+
+
+----
+
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+<code language="xml">
+
+</code>
+
+[#TOP Back to top of document]
+
+
+
+
+----
+
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+<code language="xml">
+
+</code>
+
+[#TOP Back to top of document]
+
+
+
+
+----
 
 
 == NOTYET ==
