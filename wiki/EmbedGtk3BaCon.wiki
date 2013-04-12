@@ -1,7 +1,7 @@
 #embed gtk3 in bacon
 
 
-#summary BaCon and HUG Widgets Examples.
+#summary Convert gtk3 official examples to BacCon .
 
 The official site is http://www.basic-converter.org/
 The official forum is http://basic-converter.proboards.com/ 
