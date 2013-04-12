@@ -320,7 +320,9 @@ gtk_main
 
 == RADIO ==
 
-[https://developer.gnome.org/gtk3/stable/GtkRadioButton.html]
+[https://developer.gnome.org/gnome-devel-demos/3.8/radiobutton.c.html.en]
+
+
 
 ||*Example code: radio-gtk3-proto.bac*||
 
