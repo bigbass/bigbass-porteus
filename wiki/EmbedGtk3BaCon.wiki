@@ -11,9 +11,10 @@ The official forum is http://basic-converter.proboards.com/
 = BaCon with GTK3 Examples =
 
 Getting started with sample widgets
- Most of the examples have been converted from the gtk3 official examples
- ported to BaCon code as a reference only to make it easier to see
- how to code it with BaCon
+Most of the examples have been converted from the gtk3 official examples
+ported to BaCon code 
+as a reference only to make it easier to see
+how to code it with BaCon
 
 *TOP*    Sorry for the no color highlighting wiki doesn't have BaCon yet
 
