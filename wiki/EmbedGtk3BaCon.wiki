@@ -841,7 +841,7 @@ x = gtk_dialog_run(gtk_message_dialog_new(0, 0, 0, GTK_STOCK_OK,"Greetings from 
 
 [http://]
 
-||*Example code: notyet.bac*||
+||*Example code: window-gtk2-proto.bac*||
 
 <code language="xml">
 '
