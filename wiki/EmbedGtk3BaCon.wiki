@@ -10,18 +10,17 @@ The official forum is http://basic-converter.proboards.com/
 
 = Introduction =
 
-= BaCon with HUG Examples =
+= BaCon with GTK3 Examples =
 
 Getting started with sample widgets
- Some examples have gtkdialog side by side equivalent images
+ Most of the examples have been converted from the gtk3 official examples
  ported to BaCon code as a reference only to make it easier to see
- how to code it with BaCon for those that have used gtkdialog
- before this would help you see how it also can be done with Bacon / HUG
+ how to code it with BaCon
 
 *TOP*    Sorry for the no color highlighting wiki doesn't have BaCon yet
 
 || The widgets ||
-|| [#HELLO HELLO] || [#ICON-KDE4 ICON-KDE4] || [#SPINBOX SPINBOX] ||
+|| [#CHECK CHECK] || [#ICON-KDE4 ICON-KDE4] || [#SPINBOX SPINBOX] ||
 || [#TEXT TEXT] || [#RADIOBOX RADIOBOX] || [#VSLIDER VSLIDER] ||
 || [#MARKUP MARKUP] || [#LISTBOX LISTBOX] || [#HSLIDER HSLIDER] ||
 || [#INPUT2 INPUT2] || [#COMBO-BOX COMBO-BOX] || [#PROGRESSBAR PROGRESSBAR] ||
@@ -35,49 +34,81 @@ Getting started with sample widgets
 
 
 
-== HELLO ==
+== CHECK ==
 
-[http://bigbass-porteus.googlecode.com/files/hello.png]
+Sticking to just the basics a mini how to
+So you can see how to convert official examples to Simplified embedded gtk ones in BaCon
+using the new PROTO option
 
-||*  Example code: hello.bac*||
+using this official example code as the reference
+[https://developer.gnome.org/gnome-devel-demos/3.5/checkbutton.c.html.en]
+
+
+
+
+
+||*  Example code: check-gtk3-proto.bac*||
 
 
 <code language="xml">
 
-
-' BaCon / HUG Hello World
-' hello.bac
-' Include the files for making a GUI.
-INCLUDE "hug.bac"
-INIT
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
 
-' 1.) Create your main working window, 250 pixels wide x 100 pixels high
-Mainwin = WINDOW( "Hello Title Bar", 250, 100 )
+
+PROTO gtk_init
+PROTO gtk_window_new
+PROTO gtk_main
+PROTO gtk_main_quit
+PROTO gtk_window_set_title 
+PROTO gtk_container_add 
+PROTO gtk_toggle_button_set_active 
+PROTO gtk_widget_show_all 
+PROTO gtk_window_set_default_size 
+PROTO gtk_window_set_title 
+PROTO gtk_application_new 
+PROTO gtk_application_window_new 
+PROTO gtk_check_button_new_with_label 
+PROTO g_signal_connect_data
 
 
-' 2. ) Create a label Hello BaCon! with text, 150 x 30
-My_label = MARK( "Hello BaCon!", 150, 30 )
+PROTO gtk_toggle_button_get_active
 
-' 3.) Attach the label to the main window
-ATTACH( Mainwin, My_label, 50, 20 )
+'--- signal handler for "toggled" signal of the CheckButton
 
-' 4.) Create a button
-My_btn = BUTTON( "I'm done", 80, 25)
+'====================
+SUB toggled_cb
+'==================== 
+	
+	
+	TBUT = gtk_toggle_button_get_active (checkbutton)
+	IF TBUT = 1 THEN
+		gtk_window_set_title (window, "CheckButton Example")
+	ELSE 
+		gtk_window_set_title (window, "Callback working")
+	END IF 
+	PRINT TBUT
+    
+	
+END SUB
 
-' 5.) Attach button to the main window
-ATTACH( Mainwin, My_btn, 10, 60 )
 
-' 6.) Make button do something
-CALLBACK( My_btn, QUIT)
 
-'7.) Create a button.
-My_chk = STOCK("gtk-quit", 80, 25)
-ATTACH( Mainwin, My_chk, 155, 60 )
+	gtk_init(0, 0)	
+	
+	window = gtk_window_new ()
+	gtk_window_set_title (window, "CheckButton Example")
+	gtk_window_set_default_size (window, 300, 100)
+	
+	checkbutton = gtk_check_button_new_with_label ("Show Title")
+	gtk_toggle_button_set_active (checkbutton, TRUE)
+	
+	g_signal_connect_data(checkbutton, "notify::active",toggled_cb, 0, 0, 0)
+	gtk_container_add (window, checkbutton)
+	gtk_widget_show_all (window)	
 
-'8.)Make button do something
-CALLBACK( My_chk, QUIT)
-DISPLAY 
+	gtk_main
+
 
 
 
