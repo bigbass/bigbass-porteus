@@ -253,14 +253,11 @@ END SUB
 '=====================
 SUB radio_clicked()
 '=====================
-		
+	
 	CLEAR
 	PRINT "button1"
 	gtk_spinner_start (spinner)
-	
-	
-	
-	
+
 END SUB
 
 
@@ -272,7 +269,7 @@ SUB radio_clicked2()
 	CLEAR
 	PRINT "button2"
 	gtk_spinner_stop (spinner)
-	
+
 END SUB
 
 
