@@ -8,7 +8,7 @@ The official forum is http://basic-converter.proboards.com/
 
 
 
-= BaCon with GTK3 Examples =
+= BaCon with GTK3 and GTK2 Examples =
 
 Getting started with sample widgets
 Most of the examples have been converted from the gtk3 official examples
