@@ -115,43 +115,91 @@ END SUB
 
 == TEXT ==
 
-[http://bigbass-porteus.googlecode.com/files/bacon-equiv.png]
+another official example
+[https://developer.gnome.org/gnome-devel-demos/3.5/textview.c.html.en]
 
-||*Example code: static.bac*||
+
+
+||*Example code: text-gtk3-proto.bac*||
 
 <code language="xml">
-' static.bac
-' Include the files for making a GUI.
-INCLUDE "hug.bac"
-INIT
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
 
-' 1.) Create your main working window, 250 pixels wide x 100 pixels high
-Mainwin = WINDOW( "BaCon Title Bar", 250, 100 )
+
+PROTO gtk_init
+PROTO gtk_window_new
+PROTO gtk_main
+PROTO gtk_main_quit
+PROTO g_signal_connect_data
+PROTO gtk_container_add 
+PROTO gtk_container_set_border_width 
+PROTO gtk_scrolled_window_set_policy 
+PROTO gtk_text_view_set_wrap_mode 
+PROTO gtk_widget_show_all 
+PROTO gtk_window_set_default_size 
+PROTO gtk_window_set_title 
+PROTO gtk_application_new 
+PROTO gtk_application_window_new 
+PROTO gtk_scrolled_window_new 
+PROTO gtk_text_buffer_new 
+PROTO gtk_text_view_new_with_buffer 
+
+GTK_WRAP_WORD = 2
+GTK_POLICY_AUTOMATIC = 1
 
 
-' 2. ) Create a label Hello BaCon! with text, 150 x 30
-My_label = MARK( "This is static text", 150, 30 )
+'=====================
+SUB exit_prog
+'=====================
+    gtk_main_quit
+END SUB
 
-' 3.) Attach the label to the main window
-ATTACH( Mainwin, My_label, 50, 20 )
 
-' 4.) Create a button
-My_btn = STOCK( "gtk-yes", 80, 25)
 
-' 5.) Attach button to the main window
-ATTACH( Mainwin, My_btn, 10, 60 )
+ 
+	gtk_init(0, 0)
+	
+	'--- Create a window with a title, and a default size 
+	window = gtk_window_new ()
+	gtk_window_set_title (window, "TextView Example")
+	gtk_window_set_default_size (window, 220, 200)
+	g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+	
+	'--- The text buffer represents the text being edited 
+	buffer = gtk_text_buffer_new (NULL)
+	
+	
+	'--- Text view is a widget in which can display the text buffer. 
+	'--- The line wrapping is set to break lines in between words.
+	
+	text_view = gtk_text_view_new_with_buffer (buffer)
+	gtk_text_view_set_wrap_mode (text_view, GTK_WRAP_WORD) 
+	
+	
+	'--- Create the scrolled window. Usually NULL is passed for both parameters so 
+	'--- that it creates the horizontal/vertical adjustments automatically. Setting 
+	'--- the scrollbar policy to automatic allows the scrollbars to only show up 
+	'--- when needed. 
+	
+	scrolled_window = gtk_scrolled_window_new (NULL, NULL)
+	gtk_scrolled_window_set_policy (scrolled_window, GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC) 
+	'--- The function directly below is used to add children to the scrolled window 
+	'--- with scrolling capabilities (e.g text_view), otherwise, 
+	'--- gtk_scrolled_window_add_with_viewport() would have been used
+	
+	gtk_container_add (scrolled_window, text_view)
+	gtk_container_set_border_width (scrolled_window, 5)
+	
+	gtk_container_add (window, scrolled_window)	
+	gtk_widget_show_all (window)	
+	gtk_main	
+	
+	
+	
+	
 
-' 6.) Make button do something
-CALLBACK( My_btn, QUIT)
 
-'7.) Create a button.
-My_chk = STOCK("gtk-cancel", 80, 25)
-ATTACH( Mainwin, My_chk, 155, 60 )
-
-'8.)Make button do something
-CALLBACK( My_chk, QUIT)
-DISPLAY 
 
 </code>
 
