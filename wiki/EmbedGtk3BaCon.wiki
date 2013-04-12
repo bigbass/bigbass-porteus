@@ -22,7 +22,7 @@ how to code it with BaCon
 || [#CHECK CHECK] || [#SPINNER SPINNER] || [#RADIO RADIO] ||
 || [#TEXT TEXT] || [#SWITCH2 SWITCH2] || [#SWITCH SWITCH] ||
 || [#LABEL LABEL] || [#HELLO2 HELLO2] || [#NOTYET NOTYET] ||
-
+|| [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#NOTYET NOTYET] ||
 ----
 
 
@@ -811,14 +811,22 @@ END SUB
 ----
 
 
-== NOTYET ==
+== DIALOG ==
 
 [http://]
 
-||*Example code: notyet.bac*||
+||*Example code: dialog-gtk2-proto.bac*||
 
 <code language="xml">
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
 
+
+PROTO gtk_init, gtk_message_dialog_new
+
+CONST GTK_STOCK_OK = 1
+
+gtk_init(0, 0)
+x = gtk_dialog_run(gtk_message_dialog_new(0, 0, 0, GTK_STOCK_OK,"Greetings from BaCon!"))
 </code>
 
 [#TOP Back to top of document]
@@ -829,14 +837,81 @@ END SUB
 ----
 
 
-== NOTYET ==
+== WINDOW ==
 
 [http://]
 
 ||*Example code: notyet.bac*||
 
 <code language="xml">
+'
+'--- set up for compiling embedded library GTK
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
 
+'ported from [url]http://www.cs.dartmouth.edu/~xy/cs23/gtk.html[/url]
+'layout.c now call it layout-proto.bac by bigbass
+
+
+
+
+'--- this replaces the need for IMPORT. the TYPE is not needed
+'--- place all the functions that you will use here
+
+PROTO gtk_init
+PROTO gtk_window_new
+PROTO gtk_window_set_title
+PROTO gtk_window_set_position
+PROTO gtk_window_set_default_size
+PROTO gtk_label_new
+PROTO gtk_hbox_new
+PROTO gtk_box_pack_start
+PROTO gtk_container_add
+PROTO g_signal_connect_data,
+PROTO g gtk_widget_show_all
+PROTO gtk_main
+PROTO gtk_main_quit
+
+
+' get the needed missing values
+GTK_WINDOW_TOPLEVEL = 0
+GTK_WIN_POS_CENTER = 1
+
+
+
+
+'===============
+SUB exit_prog
+'===============
+gtk_main_quit
+END SUB
+
+
+
+
+gtk_init(0, 0)
+
+window = gtk_window_new(GTK_WINDOW_TOPLEVEL)
+gtk_window_set_title(window, "Layout")
+gtk_window_set_position(window, GTK_WIN_POS_CENTER)
+gtk_window_set_default_size(window, 300, 200)
+
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+label1 = gtk_label_new("Label 1")
+label2 = gtk_label_new("Label 2")
+label3 = gtk_label_new("Label 3")
+
+hbox = gtk_hbox_new(TRUE, 5)
+vbox = gtk_vbox_new(FALSE, 10)
+
+gtk_box_pack_start(vbox, label1, TRUE, FALSE, 5)
+gtk_box_pack_start(vbox, label2, TRUE, FALSE, 5)
+gtk_box_pack_start(hbox, vbox, FALSE, FALSE, 5)
+gtk_box_pack_start(hbox, label3, FALSE, FALSE, 5)
+
+gtk_container_add(window, hbox)
+gtk_widget_show_all(window)
+gtk_main
 </code>
 
 [#TOP Back to top of document]
