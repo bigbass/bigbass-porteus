@@ -664,7 +664,9 @@ gtk_main
 
 == LABEL ==
 
-ported from [url]http://www.cs.dartmouth.edu/~xy/cs23/gtk.html[/url]
+ported from [http://www.cs.dartmouth.edu/~xy/cs23/gtk.html]
+layout.c now call it lable-gtk2-proto.bac by bigbass
+
 
 ||*Example code: lable-gtk2-proto.bac*||
 
@@ -672,10 +674,6 @@ ported from [url]http://www.cs.dartmouth.edu/~xy/cs23/gtk.html[/url]
 '
 '--- set up for compiling embedded library GTK
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
-
-'ported from [url]http://www.cs.dartmouth.edu/~xy/cs23/gtk.html[/url]
-'layout.c now call it lable-gtk2-proto.bac by bigbass
-
 
 
 
