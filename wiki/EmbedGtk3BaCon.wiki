@@ -8,8 +8,6 @@ The official forum is http://basic-converter.proboards.com/
 
 
 
-= Introduction =
-
 = BaCon with GTK3 Examples =
 
 Getting started with sample widgets
@@ -36,14 +34,11 @@ Getting started with sample widgets
 
 == CHECK ==
 
-Sticking to just the basics a mini how to
-So you can see how to convert official examples to Simplified embedded gtk ones in BaCon
+how to convert official examples to Simplified embedded gtk ones in BaCon
 using the new PROTO option
 
 using this official example code as the reference
 [https://developer.gnome.org/gnome-devel-demos/3.5/checkbutton.c.html.en]
-
-
 
 
 
@@ -110,12 +105,7 @@ END SUB
 	gtk_main
 
 
-
-
 </code>
-
-
-
 
 
 [#TOP Back to top of document]
