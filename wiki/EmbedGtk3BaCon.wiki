@@ -205,7 +205,10 @@ END SUB
 
 == SPINNER ==
 
-[http://]
+original code was not complete to show callbacks and a full working example 
+[https://developer.gnome.org/gnome-devel-demos/3.8/spinner.c.html.en]
+
+*had to add callbacks , buttons and signals* 
 
 ||*Example code: spinner-gtk3-proto.bac*||
 
