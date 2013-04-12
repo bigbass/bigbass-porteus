@@ -19,7 +19,7 @@ how to code it with BaCon
 *TOP*    Sorry for the no color highlighting wiki doesn't have BaCon yet
 
 || The widgets ||
-|| [#CHECK CHECK] || [#NOTYET NOTYET] || [#NOTYET NOTYET] ||
+|| [#CHECK CHECK] || [#SPINNER SPINNER] || [#NOTYET NOTYET] ||
 || [#TEXT TEXT] || [#NOTYET NOTYET] || [#NOTYET NOTYET] ||
 
 
@@ -203,13 +203,111 @@ END SUB
 
 ----
 
-== NOTYET ==
+== SPINNER ==
 
 [http://]
 
-||*Example code: notyet.bac*||
+||*Example code: spinner-gtk3-proto.bac*||
 
 <code language="xml">
+
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+
+
+PROTO gtk_init
+PROTO gtk_window_new
+PROTO gtk_main
+PROTO gtk_main_quit
+PROTO gtk_window_set_title
+PROTO gtk_widget_show_all
+PROTO g_signal_connect_data
+PROTO gtk_spinner_new
+PROTO gtk_spinner_start
+PROTO gtk_spinner_stop
+PROTO gtk_container_add
+PROTO gtk_window_set_default_size
+PROTO gtk_box_new
+PROTO gtk_box_set_homogeneous
+PROTO gtk_box_pack_start
+
+PROTO gtk_radio_action_set_group(
+
+GTK_ORIENTATION_VERTICAL = 1
+
+
+'=====================
+SUB exit_prog
+'=====================
+	gtk_main_quit
+END SUB
+
+
+
+
+'=====================
+SUB radio_clicked()
+'=====================
+		
+	CLEAR
+	PRINT "button1"
+	gtk_spinner_start (spinner)
+	
+	
+	
+	
+END SUB
+
+
+
+
+'=====================
+SUB radio_clicked2()
+'=====================
+	CLEAR
+	PRINT "button2"
+	gtk_spinner_stop (spinner)
+	
+END SUB
+
+
+
+
+
+gtk_init(0, 0)
+
+window = gtk_window_new ()
+gtk_window_set_default_size (window, 200, 200)
+gtk_window_set_title (window, "Spinner test")
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2)
+gtk_box_set_homogeneous (box, TRUE)
+
+spinner = gtk_spinner_new ()
+
+
+'---Create a radio button1 with a label
+radio1 = gtk_radio_button_new_with_label_from_widget (radio1, "Start spinner.")
+g_signal_connect_data(radio1, "clicked",radio_clicked, 0, 0, 0)
+
+
+
+'---Create a radio button2 with a label
+radio2 = gtk_radio_button_new_with_label_from_widget (radio2, "Stop spinner.")
+g_signal_connect_data(radio2, "clicked",radio_clicked2, 0, 0, 0)
+gtk_radio_action_set_group(radio1,2)
+
+'---Pack them into a box, then show all the widgets
+gtk_box_pack_start (box, radio1, TRUE, TRUE, 2
+gtk_box_pack_start (box, radio2, TRUE, TRUE, 2)
+gtk_box_pack_start (box, spinner, TRUE, TRUE, 2)
+gtk_container_add (window, box)
+
+gtk_widget_show_all (window)
+gtk_main
+
+
 
 </code>
 
