@@ -650,17 +650,18 @@ ported from [http://www.cs.dartmouth.edu/~xy/cs23/gtk.html]
 layout.c now call it lable-gtk2-proto.bac by bigbass
 
 
+[http://bigbass-porteus.googlecode.com/files/lable-gtk2-proto.png]
+
+
 ||*Example code: lable-gtk2-proto.bac*||
 
 <code language="xml">
-'
 '--- set up for compiling embedded library GTK
-PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
-
-
+PRAGMA LDFLAGS pkg-config --cflags --libs gtk+-2.0 
 
 '--- this replaces the need for IMPORT. the TYPE is not needed
 '--- place all the functions that you will use here
+ 
 
 PROTO gtk_init
 PROTO gtk_window_new
@@ -675,44 +676,42 @@ PROTO g_signal_connect_data,
 PROTO g gtk_widget_show_all
 PROTO gtk_main
 PROTO gtk_main_quit
-
+ 
 
 ' get the needed missing values
 GTK_WINDOW_TOPLEVEL = 0
 GTK_WIN_POS_CENTER = 1
-
-
-
+ 
 
 '===============
-SUB exit_prog
+ SUB exit_prog
 '===============
-gtk_main_quit
+	gtk_main_quit
 END SUB
-
-
-
+ 
 
 gtk_init(0, 0)
-
 window = gtk_window_new(GTK_WINDOW_TOPLEVEL)
 gtk_window_set_title(window, "Layout")
 gtk_window_set_position(window, GTK_WIN_POS_CENTER)
 gtk_window_set_default_size(window, 300, 200)
-
 g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+ 
 
 label1 = gtk_label_new("Label 1")
 label2 = gtk_label_new("Label 2")
 label3 = gtk_label_new("Label 3")
+ 
 
 hbox = gtk_hbox_new(TRUE, 5)
 vbox = gtk_vbox_new(FALSE, 10)
+ 
 
 gtk_box_pack_start(vbox, label1, TRUE, FALSE, 5)
 gtk_box_pack_start(vbox, label2, TRUE, FALSE, 5)
 gtk_box_pack_start(hbox, vbox, FALSE, FALSE, 5)
 gtk_box_pack_start(hbox, label3, FALSE, FALSE, 5)
+ 
 
 gtk_container_add(window, hbox)
 gtk_widget_show_all(window)
