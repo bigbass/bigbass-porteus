@@ -42,63 +42,64 @@ using this official example code as the reference
 
 
 <code language="xml">
-
-PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
-
-
+PRAGMA LDFLAGS pkg-config --cflags --libs gtk+-3.0
 
 PROTO gtk_init
 PROTO gtk_window_new
 PROTO gtk_main
 PROTO gtk_main_quit
-PROTO gtk_window_set_title 
-PROTO gtk_container_add 
-PROTO gtk_toggle_button_set_active 
-PROTO gtk_widget_show_all 
-PROTO gtk_window_set_default_size 
-PROTO gtk_window_set_title 
-PROTO gtk_application_new 
-PROTO gtk_application_window_new 
-PROTO gtk_check_button_new_with_label 
+PROTO gtk_window_set_title
+PROTO gtk_container_add
+PROTO gtk_toggle_button_set_active
+PROTO gtk_widget_show_all
+PROTO gtk_window_set_default_size
+PROTO gtk_window_set_title
+PROTO gtk_application_new
+PROTO gtk_application_window_new
+PROTO gtk_check_button_new_with_label
 PROTO g_signal_connect_data
-
-
 PROTO gtk_toggle_button_get_active
+PROTO gtk_main_quit
 
-'--- signal handler for "toggled" signal of the CheckButton
-
-'====================
-SUB toggled_cb
-'==================== 
-	
-	
-	TBUT = gtk_toggle_button_get_active (checkbutton)
-	IF TBUT = 1 THEN
-		gtk_window_set_title (window, "CheckButton Example")
-	ELSE 
-		gtk_window_set_title (window, "Callback working")
-	END IF 
-	PRINT TBUT
-    
-	
+'=====================
+SUB exit_prog
+'=====================
+	gtk_main_quit
 END SUB
 
 
 
-	gtk_init(0, 0)	
-	
-	window = gtk_window_new ()
-	gtk_window_set_title (window, "CheckButton Example")
-	gtk_window_set_default_size (window, 300, 100)
-	
-	checkbutton = gtk_check_button_new_with_label ("Show Title")
-	gtk_toggle_button_set_active (checkbutton, TRUE)
-	
-	g_signal_connect_data(checkbutton, "notify::active",toggled_cb, 0, 0, 0)
-	gtk_container_add (window, checkbutton)
-	gtk_widget_show_all (window)	
 
-	gtk_main
+
+'====================
+ SUB toggled_cb
+'====================
+       
+	'--- signal handler for "toggled" signal of the CheckButton 
+	TBUT = gtk_toggle_button_get_active (checkbutton)
+	IF TBUT = 1 THEN
+			gtk_window_set_title (window, "CheckButton Example")
+	ELSE
+			gtk_window_set_title (window, "Callback working")
+	END IF
+	PRINT TBUT       
+END SUB
+ 
+
+gtk_init(0, 0)  
+window = gtk_window_new ()
+gtk_window_set_title (window, "CheckButton Example")
+gtk_window_set_default_size (window, 300, 100)
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+checkbutton = gtk_check_button_new_with_label ("Show Title")
+gtk_toggle_button_set_active (checkbutton, TRUE)
+
+g_signal_connect_data(checkbutton, "notify::active",toggled_cb, 0, 0, 0)
+gtk_container_add (window, checkbutton)
+gtk_widget_show_all (window)    
+gtk_main
+ 
 
 
 </code>
