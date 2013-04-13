@@ -529,7 +529,7 @@ gtk_main
 
 == SWITCH ==
 
-[http://]
+[http://bigbass-porteus.googlecode.com/files/switch-gtk3-proto.png]
 
 ||*Example code: switch-gtk3-proto.bac*||
 
@@ -641,30 +641,6 @@ gtk_main
 
 
 ----
-
-
-
-
-
-== NOTYET ==
-
-[http://]
-
-||*Example code: notyet.bac*||
-
-<code language="xml">
-
-</code>
-
-[#TOP Back to top of document]
-
-
-
-
-----
-
-
-
 
 
 
@@ -978,20 +954,7 @@ gtk_main
 
 ----
 
-----
 
-
-== NOTYET ==
-
-[http://]
-
-||*Example code: notyet.bac*||
-
-<code language="xml">
-
-</code>
-
-[#TOP Back to top of document]
 
 
 
@@ -1095,4 +1058,24 @@ gtk_main
 </code>
 
 [#TOP Back to top of document]
+
+
+----
+
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+<code language="xml">
+
+</code>
+
+[#TOP Back to top of document]
+
+
+
+
 [#TOP Back to top of document]
