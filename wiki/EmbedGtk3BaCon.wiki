@@ -767,18 +767,15 @@ END SUB
 
 
 
-    
-    gtk_init(0, 0)
 
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL)
-    gtk_window_set_title(window, "Hello World!")
+gtk_init(0, 0)
+window = gtk_window_new(GTK_WINDOW_TOPLEVEL)
+gtk_window_set_title(window, "Hello World!")
 
-    /* Connect the main window to the destroy ---> replace with SUB exit_prog */
-    g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
-
-    gtk_widget_show_all(window)        
-    
-    gtk_main
+'--- Connect the main window to the destroy ---> replace with SUB exit_prog 
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+gtk_widget_show_all(window)        
+gtk_main
 
 
 
