@@ -23,7 +23,7 @@ how to code it with BaCon
 || [#TEXT TEXT] || [#SWITCH2 SWITCH2] || [#SWITCH SWITCH] ||
 || [#LABEL LABEL] || [#HELLO2 HELLO2] || [#BUTTON BUTTON] ||
 || [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#TOGGLE-SPINNER TOGGLE-SPINNER] ||
-|| [#TABS3 TABS3] || [#nada nada] || [#nada nada] ||
+|| [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#nada nada] ||
 ----
 
 
@@ -1207,13 +1207,176 @@ gtk_main
 ----
 
 
-== NOTYET ==
+== NOTEBOOK ==
 
-[http://]
+[http://bigbass-porteus.googlecode.com/files/notebook3-gtk2-proto]
 
-||*Example code: notyet.bac*||
+source code was heavily modified during the conversion 
+[http://www.dlhoffman.com/publiclibrary/software/gtk+-html-docs/gtk_tut-8.html]
+
+
+||*Example code: notebook3-gtk2-proto.bac*||
 
 <code language="xml">
+
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
+
+
+
+PROTO gtk_container_add
+PROTO gtk_container_border_width
+PROTO gtk_notebook_append_page
+PROTO gtk_widget_set_usize
+PROTO gtk_widget_show
+PROTO gtk_container_add
+PROTO gtk_init
+PROTO gtk_main
+PROTO gtk_main_quit
+PROTO gtk_notebook_set_page
+PROTO gtk_notebook_set_tab_pos
+PROTO g_signal_connect_data
+PROTO gtk_table_attach_defaults
+PROTO gtk_widget_show
+PROTO gtk_button_new_with_label
+PROTO gtk_frame_new
+PROTO gtk_label_new
+PROTO gtk_notebook_new
+PROTO gtk_table_new
+PROTO gtk_window_new
+PROTO gtk_notebook_set_current_page
+
+GTK_POS_TOP = 2
+tabnumber = 1
+
+
+'=====================
+SUB exit_prog
+'=====================
+gtk_main_quit
+END SUB
+
+
+
+'=====================
+SUB gtk_notebook_next_page
+'=====================
+    
+    CLEAR
+    PRINT "next page" ,tabnumber
+    
+    '--- This function rotates the position of the tabs
+    gtk_notebook_set_current_page(notebook, tabnumber)
+    
+    tabnumber = tabnumber +1
+    IF tabnumber >= 3 THEN
+        tabnumber = 3
+    END IF     
+END SUB
+
+
+'=====================
+SUB gtk_notebook_prev_page
+'=====================
+
+    CLEAR
+    PRINT "prev page" ,    tabnumber    
+    tabnumber = tabnumber -1
+    
+    '--- This function rotates the position of the tabs
+    gtk_notebook_set_current_page(notebook, tabnumber)
+    
+    IF tabnumber < 1 THEN
+        tabnumber = 1    
+    END IF
+
+END SUB
+
+
+
+
+gtk_init(0, 0)
+window = gtk_window_new ()
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+
+table = gtk_table_new(2,6,TRUE)
+gtk_container_add (window, table)
+
+'--- Create a new notebook, place the position of the tabs
+notebook = gtk_notebook_new ()
+gtk_notebook_set_tab_pos (notebook, GTK_POS_TOP)
+gtk_table_attach_defaults(table, notebook, 0,6,0,1)
+gtk_widget_show(notebook)
+
+
+
+frame = gtk_frame_new ()
+gtk_widget_set_usize (frame, 100, 75)
+gtk_widget_show (frame)
+
+label = gtk_label_new ("Append Frame1",1)
+gtk_container_add (frame, label)
+gtk_widget_show (label)
+
+label = gtk_label_new ("Page1",1)
+gtk_notebook_append_page (notebook, frame, label)
+
+'-------------------------------------------------
+
+frame = gtk_frame_new ()
+gtk_widget_set_usize (frame, 100, 75)
+gtk_widget_show (frame)
+
+label = gtk_label_new ("Append Frame2",2)
+gtk_container_add (frame, label)
+gtk_widget_show (label)
+
+label = gtk_label_new ("Page2",2)
+gtk_notebook_append_page (notebook, frame, label)
+
+'-------------------------------------------------
+
+frame = gtk_frame_new ()
+gtk_widget_set_usize (frame, 100, 75)
+gtk_widget_show (frame)
+
+label = gtk_label_new ("Append Frame3",3)
+gtk_container_add (frame, label)
+gtk_widget_show (label)
+
+label = gtk_label_new ("Page3",3)
+gtk_notebook_append_page (notebook, frame, label)
+'-------------------------------------------------
+
+
+
+'--- Set what page to start at (page 1)
+'gtk_notebook_set_page (notebook, 0)
+
+
+'--- create a bunch of buttons
+button = gtk_button_new_with_label ("close")
+g_signal_connect_data(button, "clicked", exit_prog, 0, 0, 0)
+
+
+gtk_table_attach_defaults(table, button, 0,1,1,2)
+gtk_widget_show(button)
+
+button = gtk_button_new_with_label ("next page")
+g_signal_connect_data(button, "clicked",gtk_notebook_next_page, 0, 0, 0)
+
+gtk_table_attach_defaults(table, button, 1,2,1,2)
+gtk_widget_show(button)
+
+button = gtk_button_new_with_label ("prev page")
+g_signal_connect_data(button, "clicked",gtk_notebook_prev_page, 0, 0, 0)
+gtk_table_attach_defaults(table, button, 2,3,1,2)
+gtk_widget_show(button)
+
+gtk_widget_show(table)
+gtk_widget_show(window)
+gtk_main
+
 
 </code>
 
