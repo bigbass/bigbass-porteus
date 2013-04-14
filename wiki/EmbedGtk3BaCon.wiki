@@ -23,6 +23,7 @@ how to code it with BaCon
 || [#TEXT TEXT] || [#SWITCH2 SWITCH2] || [#SWITCH SWITCH] ||
 || [#LABEL LABEL] || [#HELLO2 HELLO2] || [#BUTTON BUTTON] ||
 || [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#TOGGLE-SPINNER TOGGLE-SPINNER] ||
+|| [#TABS3 TABS3] || [#nada nada] || [#nada nada] ||
 ----
 
 
@@ -1104,6 +1105,108 @@ gtk_main
 ----
 
 
+== TABS3 ==
+
+[http://bigbass-porteus.googlecode.com/files/tabs3-gtk3-proto.png]
+
+||*Example code: tabs3-gtk3-proto.bac*||
+
+<code language="xml">
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+
+PROTO gtk_main_quit
+PROTO g_signal_connect_data
+PROTO gtk_button_new_with_label
+PROTO gtk_label_new
+PROTO gtk_notebook_new
+PROTO gtk_window_new
+PROTO gtk_container_add
+PROTO gtk_init
+PROTO gtk_main
+PROTO gtk_notebook_append_page
+PROTO gtk_widget_show
+PROTO gtk_window_set_default_size
+PROTO  gtk_widget_show_all
+
+'--- set undeclared values
+GTK_WINDOW_TOPLEVEL = 0
+
+
+'=====================
+SUB exit_prog
+'=====================
+	gtk_main_quit
+END SUB
+
+
+
+'=====================
+SUB change_current_page_cb1()
+'=====================
+	'---  Example signal handler for page changes 
+	PRINT "button 1 pressed"
+END SUB
+
+
+
+
+
+'=====================
+SUB change_current_page_cb2()
+'=====================
+	'---  Example signal handler for page changes 
+	PRINT "button 2 pressed"
+END SUB
+
+
+gtk_init(0, 0)
+
+window = gtk_window_new(GTK_WINDOW_TOPLEVEL)
+gtk_window_set_default_size(window, 200, 100)
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+notebook = gtk_notebook_new()
+
+
+'---  Append a test page to the notebook 
+button1 = gtk_button_new_with_label ("button one")
+gtk_widget_show(button1)
+tab_label1 = gtk_label_new("tab 1")
+gtk_notebook_append_page(notebook, button1,tab_label1)
+g_signal_connect_data(button1, "clicked",change_current_page_cb1, 0, 0, 0)
+
+
+'---  Append another test page to the notebook 
+button2 = gtk_button_new_with_label("button two")
+gtk_widget_show(button2)
+tab_label2 = gtk_label_new("tab 2")
+gtk_notebook_append_page(notebook, button2,tab_label2)
+g_signal_connect_data(button2, "clicked",change_current_page_cb2, 0, 0, 0)
+
+
+
+'---  Append another test page to the notebook 
+button3 = gtk_button_new_with_label("button close")
+gtk_widget_show(button3)
+tab_label3 = gtk_label_new("close")
+gtk_notebook_append_page(notebook, button3,tab_label3)
+g_signal_connect_data(button3, "clicked",exit_prog, 0, 0, 0)
+
+
+gtk_widget_show(notebook)
+gtk_container_add(window, notebook)
+gtk_widget_show(window)
+gtk_main
+
+
+</code>
+
+[#TOP Back to top of document]
+
+----
+
+
 == NOTYET ==
 
 [http://]
@@ -1116,7 +1219,22 @@ gtk_main
 
 [#TOP Back to top of document]
 
+----
 
+
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+<code language="xml">
+
+</code>
+
+
+[#TOP Back to top of document]
 
 
 [#TOP Back to top of document]
