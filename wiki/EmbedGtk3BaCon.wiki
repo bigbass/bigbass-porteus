@@ -791,7 +791,7 @@ gtk_main
 
 == DIALOG ==
 
-[http://]
+[http://bigbass-porteus.googlecode.com/files/dialog-gtk2-proto.png]
 
 ||*Example code: dialog-gtk2-proto.bac*||
 
