@@ -793,6 +793,36 @@ gtk_main
 
 [http://bigbass-porteus.googlecode.com/files/dialog-gtk2-proto.png]
 
+
+More help in simple terms
+'when the third arg is 0 the info icon is used
+'when 'the third arg is 1 the triangle warning icon is used
+'when 'the third arg is 2 the circle question mark icon is used
+'when 'the third arg is 3 the red circle with white line in the center icon is used
+'when the third arg is 4 no icon is used
+
+'using GTK terms the third arg some here not used but are offered as options you can use numbers or strings
+CONST GTK_MESSAGE_INFO = 0
+CONST GTK_MESSAGE_WARNING = 1
+CONST GTK_MESSAGE_QUESTION = 2
+CONST GTK_MESSAGE_ERROR = 3
+
+
+'the fourth arg 0 = no buttons displayed
+'the fourth arg 4 = yes and no buttons displayed
+
+'using GTK terms the fourth arg you can use numbers or strings
+CONST GTK_STOCK_OK = 1
+CONST GTK_STOCK_CLOSE = 2
+CONST GTK_STOCK_CANCEL = 3
+CONST GTK_BUTTONS_YES_NO = 4
+
+'I used the string form to give an example of the fourth argument uses GTK_STOCK_OK
+
+' the fifth argument is the message you display between double quotes 
+
+
+
 ||*Example code: dialog-gtk2-proto.bac*||
 
 <code language="xml">
