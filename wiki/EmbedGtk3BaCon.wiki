@@ -899,7 +899,7 @@ gtk_main
 
 == BUTTON ==
 
-[http://]
+[http://bigbass-porteus.googlecode.com/files/button-gtk2-proto.png]
 
 ||*Example code: button-gtk2-proto.bac*||
 
