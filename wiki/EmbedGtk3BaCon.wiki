@@ -832,9 +832,7 @@ CONST GTK_STOCK_CANCEL = 3
 
 CONST GTK_BUTTONS_YES_NO = 4
 
-I used the string form to give an example of the fourth argument 
-
-uses GTK_STOCK_OK
+I used the string form to give an example of the fourth argument uses GTK_STOCK_OK
 
 the fifth argument is the message you display between double quotes 
 
