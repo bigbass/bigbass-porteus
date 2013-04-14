@@ -956,7 +956,7 @@ gtk_main
 
 == TOGGLE-SPINNER ==
 
-[http://]
+[http://bigbass-porteus.googlecode.com/files/toggle-spinner-gtk3-proto.png]
 
 ||*Example code: toggle-spinner-gtk3-proto.bac*||
 
