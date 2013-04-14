@@ -1209,9 +1209,9 @@ gtk_main
 
 == NOTEBOOK ==
 
-[http://bigbass-porteus.googlecode.com/files/notebook3-gtk2-proto]
+[http://bigbass-porteus.googlecode.com/files/notebook3-gtk2-proto.png]
 
-source code was heavily modified during the conversion 
+source code was heavily modified during the conversion used only as a reference
 [http://www.dlhoffman.com/publiclibrary/software/gtk+-html-docs/gtk_tut-8.html]
 
 
