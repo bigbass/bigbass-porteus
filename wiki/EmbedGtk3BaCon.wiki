@@ -23,7 +23,7 @@ how to code it with BaCon
 || [#TEXT TEXT] || [#SWITCH2 SWITCH2] || [#SWITCH SWITCH] ||
 || [#LABEL LABEL] || [#HELLO2 HELLO2] || [#BUTTON BUTTON] ||
 || [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#TOGGLE-SPINNER TOGGLE-SPINNER] ||
-|| [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#nada nada] ||
+|| [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#MENU MENU] ||
 ----
 
 
@@ -648,13 +648,13 @@ gtk_main
 == LABEL ==
 
 ported from [http://www.cs.dartmouth.edu/~xy/cs23/gtk.html]
-layout.c now call it lable-gtk2-proto.bac by bigbass
+layout.c now call it label-gtk2-proto.bac by bigbass
 
 
 [http://bigbass-porteus.googlecode.com/files/lable-gtk2-proto.png]
 
 
-||*Example code: lable-gtk2-proto.bac*||
+||*Example code: label-gtk2-proto.bac*||
 
 <code language="xml">
 '--- set up for compiling embedded library GTK
@@ -1386,6 +1386,82 @@ gtk_main
 
 
 
+== MENU ==
+
+[http://zetcode.com/tutorials/gtktutorial/menusandtoolbars/]
+
+||*Example code: menu-gtk2-proto.bac*||
+
+<code language="xml">
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
+
+PROTO gtk_box_pack_start
+PROTO gtk_container_add
+PROTO gtk_init
+PROTO gtk_main
+PROTO gtk_menu_item_set_submenu
+PROTO gtk_menu_shell_append
+PROTO gtk_widget_show_all
+PROTO gtk_window_set_default_size
+PROTO gtk_window_set_position
+PROTO gtk_window_set_title
+PROTO gtk_menu_bar_new
+PROTO gtk_menu_item_new_with_label
+PROTO gtk_menu_new
+PROTO gtk_vbox_new
+PROTO gtk_window_new
+PROTO gtk_main_quit
+PROTO g_signal_connect_data
+
+
+
+' get the needed missing values
+GTK_WINDOW_TOPLEVEL = 0
+GTK_WIN_POS_CENTER = 1
+
+
+
+'=====================
+SUB exit_prog
+'=====================
+gtk_main_quit
+END SUB
+
+
+
+gtk_init(0,0)
+
+window = gtk_window_new(GTK_WINDOW_TOPLEVEL)
+gtk_window_set_position(window, GTK_WIN_POS_CENTER)
+gtk_window_set_default_size(window, 250, 200)
+gtk_window_set_title(window, "menu")
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+vbox = gtk_vbox_new(FALSE, 0)
+gtk_container_add(window, vbox)
+
+menubar = gtk_menu_bar_new()
+filemenu = gtk_menu_new()
+
+file = gtk_menu_item_new_with_label("File")
+quit = gtk_menu_item_new_with_label("Quit")
+
+gtk_menu_item_set_submenu(file, filemenu)
+gtk_menu_shell_append(filemenu, quit)
+gtk_menu_shell_append(menubar, file)
+gtk_box_pack_start(vbox, menubar, FALSE, FALSE, 3)
+
+g_signal_connect_data(quit, "activate",exit_prog, 0, 0, 0)
+gtk_widget_show_all(window)
+
+gtk_main
+</code>
+
+
+[#TOP Back to top of document]
+
+
+
 == NOTYET ==
 
 [http://]
@@ -1398,6 +1474,4 @@ gtk_main
 
 
 [#TOP Back to top of document]
-
-
 [#TOP Back to top of document]
