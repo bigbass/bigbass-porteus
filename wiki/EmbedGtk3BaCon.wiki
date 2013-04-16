@@ -24,6 +24,7 @@ how to code it with BaCon
 || [#LABEL LABEL] || [#HELLO2 HELLO2] || [#BUTTON BUTTON] ||
 || [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#TOGGLE-SPINNER TOGGLE-SPINNER] ||
 || [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#MENU MENU] ||
+|| [#MENU2 MENU2] ||
 ----
 
 
@@ -1474,4 +1475,111 @@ gtk_main
 
 
 [#TOP Back to top of document]
+
+
+
+
+
+
+== MENU2 ==
+
+[http://zetcode.com/tutorials/gtktutorial/menusandtoolbars/]
+
+Image menus, 
+*removed the  mnemonics & accelerators to make it easier to compile
+
+
+||*Example code: menu2-gtk3-proto.bac*||
+
+<code language="xml">
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+
+PROTO gtk_box_pack_start
+PROTO gtk_container_add
+PROTO gtk_init
+PROTO gtk_main
+PROTO gtk_menu_item_set_submenu
+PROTO gtk_menu_shell_append
+PROTO gtk_widget_add_accelerator
+PROTO gtk_widget_show_all
+PROTO gtk_window_add_accel_group
+PROTO gtk_window_set_default_size
+PROTO gtk_window_set_position
+PROTO gtk_window_set_title
+PROTO gtk_accel_group_new
+PROTO gtk_image_menu_item_new_from_stock
+PROTO gtk_menu_bar_new
+PROTO gtk_menu_item_new_with_mnemonic
+PROTO gtk_menu_new
+PROTO gtk_separator_menu_item_new
+PROTO gtk_vbox_new
+PROTO gtk_window_new
+PROTO gtk_main_quit
+PROTO g_signal_connect_data
+
+
+
+' get the needed missing values
+GTK_WINDOW_TOPLEVEL = 0
+GTK_WIN_POS_CENTER = 1
+
+CONST GTK_STOCK_NEW = "gtk-new"
+CONST GTK_STOCK_OPEN = "gtk-open"
+CONST GTK_STOCK_QUIT = "gtk-quit"
+
+GDK_CONTROL_MASK = 4
+GTK_ACCEL_VISIBLE = 1
+
+
+
+'=====================
+SUB exit_prog
+'=====================
+	gtk_main_quit
+END SUB
+
+
+
+gtk_init(0,0)
+
+window = gtk_window_new(GTK_WINDOW_TOPLEVEL)
+gtk_window_set_position(window, GTK_WIN_POS_CENTER)
+gtk_window_set_default_size(window, 250, 200)
+gtk_window_set_title(window, "menu")
+
+vbox = gtk_vbox_new(FALSE, 0)
+gtk_container_add(window, vbox)
+
+menubar = gtk_menu_bar_new()
+filemenu = gtk_menu_new()
+
+accel_group = gtk_accel_group_new()
+gtk_window_add_accel_group(window, accel_group)
+
+file = gtk_menu_item_new_with_mnemonic("_File")
+new = gtk_image_menu_item_new_from_stock(GTK_STOCK_NEW, NULL)
+open = gtk_image_menu_item_new_from_stock(GTK_STOCK_OPEN, NULL)
+sep = gtk_separator_menu_item_new()
+quit = gtk_image_menu_item_new_from_stock(GTK_STOCK_QUIT) 
+
+
+gtk_menu_item_set_submenu(file, filemenu)
+gtk_menu_shell_append(filemenu, new)
+gtk_menu_shell_append(filemenu, open)
+gtk_menu_shell_append(filemenu, sep)
+gtk_menu_shell_append(filemenu, quit)
+gtk_menu_shell_append(menubar, file)
+gtk_box_pack_start(vbox, menubar, FALSE, FALSE, 3)
+
+g_signal_connect_data(quit, "activate",exit_prog, 0, 0, 0)
+gtk_widget_show_all(window)
+gtk_main
+
+</code>
+
+
+[#TOP Back to top of document]
+
+
 [#TOP Back to top of document]
