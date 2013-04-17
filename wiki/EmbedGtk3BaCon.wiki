@@ -1732,7 +1732,7 @@ modified for BaCon use
 
 ||*Example code: grid-packing-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
 PROTO gtk_container_add 
@@ -1827,7 +1827,7 @@ gtk_widget_show_all (window)
 
 gtk_main 
 
-</code>
+}}}
 
 
 [#TOP Back to top of document]
