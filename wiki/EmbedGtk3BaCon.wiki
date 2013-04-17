@@ -1666,7 +1666,7 @@ gtk_main
 
 this file gets read in on the fly  to modify the builder compiled app
 
-<code language="c">
+{{{
 <interface>
 <object id="window" class="GtkWindow">
 <property name="visible">True</property>
@@ -1713,7 +1713,7 @@ this file gets read in on the fly  to modify the builder compiled app
 </object>
 </interface>
 
-</code>
+}}}
 
 
 [#TOP Back to top of document]
