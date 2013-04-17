@@ -1463,22 +1463,6 @@ gtk_main
 
 
 
-== NOTYET ==
-
-[http://]
-
-||*Example code: notyet.bac*||
-
-{{{
-
-}}}
-
-
-[#TOP Back to top of document]
-
-
-
-
 
 
 == MENU2 ==
@@ -1581,22 +1565,6 @@ gtk_main
 
 [#TOP Back to top of document]
 
-== NOTYET ==
-
-[http://]
-
-||*Example code: notyet.bac*||
-
-{{{
-
-}}}
-
-
-[#TOP Back to top of document]
-
-
-
-== BUILDER ==
 
 [http://]
 
@@ -1847,6 +1815,19 @@ gtk_main
 
 [#TOP Back to top of document]
 
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+{{{
+
+}}}
+
+
+[#TOP Back to top of document]
 
 
 [#TOP Back to top of document]
