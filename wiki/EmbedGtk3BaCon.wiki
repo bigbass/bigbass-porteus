@@ -24,7 +24,7 @@ how to code it with BaCon
 || [#LABEL LABEL] || [#HELLO2 HELLO2] || [#BUTTON BUTTON] ||
 || [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#TOGGLE-SPINNER TOGGLE-SPINNER] ||
 || [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#MENU MENU] ||
-|| [#MENU2 MENU2] || [#BUILDER BUILDER] ||
+|| [#MENU2 MENU2] || [#BUILDER BUILDER] || [#GRID-PACKING GRID-PACKING]||
 ----
 
 
@@ -1717,5 +1717,136 @@ this file gets read in on the fly  to modify the builder compiled app
 
 
 [#TOP Back to top of document]
+
+
+
+
+
+
+== GRID-PACKING ==
+
+[http://bigbass-porteus.googlecode.com/files/grid-packing.png]
+
+ported from the grid-packing example in gtk sources 
+modified for BaCon use 
+
+||*Example code: grid-packing-proto.bac*||
+
+<code language="xml">
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+PROTO gtk_container_add 
+PROTO gtk_container_set_border_width 
+PROTO gtk_grid_attach 
+PROTO gtk_init 
+PROTO gtk_main 
+PROTO gtk_widget_show_all 
+PROTO gtk_window_set_title 
+PROTO gtk_button_new_with_label 
+PROTO gtk_grid_new 
+PROTO gtk_window_new 
+PROTO g_signal_connect_data
+PROTO gtk_main_quit
+
+GTK_WINDOW_TOPLEVEL = 0
+
+'=====================
+SUB exit_prog
+'=====================
+	gtk_main_quit
+END SUB
+
+
+'=====================
+SUB button1_cb
+'=====================
+	PRINT "button 1"
+END SUB
+
+
+'=====================
+SUB button2_cb
+'=====================
+	PRINT "button 2"
+END SUB
+
+
+
+
+'---  This is called in all GTK applications. Arguments are parsed
+'---  from the command line and are returned to the application.
+
+gtk_init (0,0)
+
+'---  create a new window, and set its title
+window = gtk_window_new (GTK_WINDOW_TOPLEVEL)
+gtk_window_set_title (window, "Grid")
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+gtk_container_set_border_width (window, 10)
+
+'---  Here we construct the container that is going pack our buttons
+grid = gtk_grid_new ()
+
+'---  Pack the container in the window
+gtk_container_add (window, grid)
+
+button1 = gtk_button_new_with_label ("Button 1")
+g_signal_connect_data(button1, "clicked",button1_cb, 0, 0, 0)
+
+'---  Place the first button in the grid cell (0, 0), and make it fill
+'---  just 1 cell horizontally and vertically (ie no spanning)
+
+gtk_grid_attach (grid, button1, 0, 0, 1, 1)
+
+button2 = gtk_button_new_with_label ("Button 2")
+g_signal_connect_data(button2, "clicked",button2_cb, 0, 0, 0)
+
+'---  Place the second button in the grid cell (1, 0), and make it fill
+'---  just 1 cell horizontally and vertically (ie no spanning)
+
+gtk_grid_attach (grid, button2, 1, 0, 1, 1)
+
+button3 = gtk_button_new_with_label ("Quit")
+g_signal_connect_data(button3  , "clicked",exit_prog, 0, 0, 0)
+
+'---  Place the Quit button in the grid cell (0, 1), and make it
+'---  span 2 columns.
+
+gtk_grid_attach (grid, button3, 0, 1, 2, 1)
+
+'---  Now that we are done packing our widgets, we show them all
+'---  in one go, by calling gtk_widget_show_all() on the window.
+'---  This call recursively calls gtk_widget_show() on all widgets
+'---  that are contained in the window, directly or indirectly.
+
+gtk_widget_show_all (window)
+
+'---  All GTK applications must have a gtk_main(). Control ends here
+'---  and waits for an event to occur (like a key press or a mouse event),
+'---  until gtk_main_quit() is called.
+
+gtk_main 
+
+</code>
+
+
+[#TOP Back to top of document]
+
+
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+<code language="xml">
+
+</code>
+
+
+[#TOP Back to top of document]
+
+
 
 [#TOP Back to top of document]
