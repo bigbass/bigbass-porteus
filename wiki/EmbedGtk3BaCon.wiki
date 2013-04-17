@@ -43,7 +43,7 @@ using this official example code as the reference
 ||*  Example code: check-gtk3-proto.bac*||
 
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS pkg-config --cflags --libs gtk+-3.0
 
 PROTO gtk_init
@@ -104,7 +104,7 @@ gtk_main
  
 
 
-</code>
+}}}
 
 
 [#TOP Back to top of document]
@@ -120,7 +120,7 @@ another official example
 
 ||*Example code: text-gtk3-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
 
@@ -199,7 +199,7 @@ END SUB
 
 
 
-</code>
+}}}
 
 
 [#TOP Back to top of document]
@@ -222,7 +222,7 @@ original code was not complete to show callbacks and a fully working example
 
 ||*Example code: spinner-gtk3-proto.bac*||
 
-<code language="xml">
+{{{
 
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
@@ -319,7 +319,7 @@ gtk_main
 
 
 
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -334,7 +334,7 @@ gtk_main
 
 ||*Example code: radio-gtk3-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
 
@@ -418,7 +418,7 @@ gtk_widget_show_all (window)
 gtk_main
 
 
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -432,7 +432,7 @@ gtk_main
 
 ||*Example code: switch2-gtk3-proto.bac*||
 
-<code language="xml">
+{{{
 
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
@@ -518,7 +518,7 @@ gtk_container_add (window, grid)
 gtk_widget_show_all (window)
 gtk_main
 
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -535,7 +535,7 @@ gtk_main
 
 ||*Example code: switch-gtk3-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
 
@@ -635,7 +635,7 @@ gtk_widget_show_all (window)
 
 gtk_main
 
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -657,7 +657,7 @@ layout.c now call it label-gtk2-proto.bac by bigbass
 
 ||*Example code: label-gtk2-proto.bac*||
 
-<code language="xml">
+{{{
 '--- set up for compiling embedded library GTK
 PRAGMA LDFLAGS pkg-config --cflags --libs gtk+-2.0 
 
@@ -719,7 +719,7 @@ gtk_container_add(window, hbox)
 gtk_widget_show_all(window)
 gtk_main
 
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -738,7 +738,7 @@ ported from [http://www.cs.dartmouth.edu/~xy/cs23/gtk.html]
 
 ||*Example code: hello2-gtk2-proto.bac*||
 
-<code language="xml">
+{{{
 '--- set up for compiling embedded library GTK
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
 
@@ -781,7 +781,7 @@ gtk_main
 
 
 
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -842,7 +842,7 @@ the fifth argument is the message you display between double quotes
 
 ||*Example code: dialog-gtk2-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
 
 
@@ -852,7 +852,7 @@ CONST GTK_STOCK_OK = 1
 
 gtk_init(0, 0)
 x = gtk_dialog_run(gtk_message_dialog_new(0, 0, 0, GTK_STOCK_OK,"Greetings from BaCon!"))
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -868,7 +868,7 @@ x = gtk_dialog_run(gtk_message_dialog_new(0, 0, 0, GTK_STOCK_OK,"Greetings from 
 
 ||*Example code: window-gtk2-proto.bac*||
 
-<code language="xml">
+{{{
 '
 '--- set up for compiling embedded library GTK
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
@@ -934,7 +934,7 @@ gtk_box_pack_start(hbox, label3, FALSE, FALSE, 5)
 gtk_container_add(window, hbox)
 gtk_widget_show_all(window)
 gtk_main
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -950,7 +950,7 @@ gtk_main
 
 ||*Example code: button-gtk2-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
 
 
@@ -988,7 +988,7 @@ g_signal_connect_data(button, "clicked", exit_prog, 0, 0, 0)
 
 gtk_widget_show_all(window)
 gtk_main
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -1007,7 +1007,7 @@ gtk_main
 
 ||*Example code: toggle-spinner-gtk3-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
 PROTO gtk_init
@@ -1098,7 +1098,7 @@ gtk_container_add (window, grid)
 gtk_widget_show_all (window)
 gtk_main
 
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -1112,7 +1112,7 @@ gtk_main
 
 ||*Example code: tabs3-gtk3-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
 
@@ -1201,7 +1201,7 @@ gtk_widget_show(window)
 gtk_main
 
 
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -1218,7 +1218,7 @@ source code was heavily modified during the conversion used only as a reference
 
 ||*Example code: notebook3-gtk2-proto.bac*||
 
-<code language="xml">
+{{{
 
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
 
@@ -1379,7 +1379,7 @@ gtk_widget_show(window)
 gtk_main
 
 
-</code>
+}}}
 
 [#TOP Back to top of document]
 
@@ -1393,7 +1393,7 @@ gtk_main
 
 ||*Example code: menu-gtk2-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
 
 PROTO gtk_box_pack_start
@@ -1456,7 +1456,7 @@ g_signal_connect_data(quit, "activate",exit_prog, 0, 0, 0)
 gtk_widget_show_all(window)
 
 gtk_main
-</code>
+}}}
 
 
 [#TOP Back to top of document]
@@ -1469,9 +1469,9 @@ gtk_main
 
 ||*Example code: notyet.bac*||
 
-<code language="xml">
+{{{
 
-</code>
+}}}
 
 
 [#TOP Back to top of document]
@@ -1491,7 +1491,7 @@ Image menus,
 
 ||*Example code: menu2-gtk3-proto.bac*||
 
-<code language="xml">
+{{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
 
 
@@ -1576,7 +1576,7 @@ g_signal_connect_data(quit, "activate",exit_prog, 0, 0, 0)
 gtk_widget_show_all(window)
 gtk_main
 
-</code>
+}}}
 
 
 [#TOP Back to top of document]
@@ -1587,9 +1587,9 @@ gtk_main
 
 ||*Example code: notyet.bac*||
 
-<code language="xml">
+{{{
 
-</code>
+}}}
 
 
 [#TOP Back to top of document]
@@ -1607,7 +1607,7 @@ Thank you alexfish for this example
 
 ||*Example code: builder-proto.bac*||
 
-<code language="xml">
+{{{
 '@ GTK BUILDER this is converted from Offical GTK-Demos , Should be able to install from repo's
 '@ alexfish Bacon Converter Forums
 '@ Should be able to read Glade Files , saved as Gtk-Builder Files
@@ -1657,7 +1657,7 @@ quit = gtk_builder_get_object (builder, "quit")
     g_signal_connect_data(quit , "clicked",exit_prog, 0, 0, 0)
 gtk_main
 
-</code>
+}}}
 
 
 
@@ -1840,9 +1840,9 @@ gtk_main
 
 ||*Example code: notyet.bac*||
 
-<code language="xml">
+{{{
 
-</code>
+}}}
 
 
 [#TOP Back to top of document]
