@@ -24,7 +24,7 @@ how to code it with BaCon
 || [#LABEL LABEL] || [#HELLO2 HELLO2] || [#BUTTON BUTTON] ||
 || [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#TOGGLE-SPINNER TOGGLE-SPINNER] ||
 || [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#MENU MENU] ||
-|| [#MENU2 MENU2] ||
+|| [#MENU2 MENU2] || [#BUILDER BUILDER] ||
 ----
 
 
@@ -1581,5 +1581,141 @@ gtk_main
 
 [#TOP Back to top of document]
 
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+<code language="xml">
+
+</code>
+
+
+[#TOP Back to top of document]
+
+
+
+== BUILDER ==
+
+[http://]
+
+This allows you to read in a builder.ui 
+place the builder.ui in the same place as builder-proto.bac
+
+Thank you alexfish for this example 
+
+||*Example code: builder-proto.bac*||
+
+<code language="xml">
+'@ GTK BUILDER this is converted from Offical GTK-Demos , Should be able to install from repo's
+'@ alexfish Bacon Converter Forums
+'@ Should be able to read Glade Files , saved as Gtk-Builder Files
+
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+PROTO gtk_init
+PROTO gtk_builder_new
+PROTO gtk_builder_add_from_file
+PROTO gtk_builder_get_object
+PROTO g_signal_connect_data
+PROTO gtk_main_quit
+PROTO gtk_main
+
+gtk_init(0, 0)
+
+'=====================
+SUB exit_prog
+'=====================
+gtk_main_quit
+END SUB
+
+SUB button1_cb
+    PRINT "button 1"
+END SUB
+
+SUB button2_cb
+     PRINT "button 2"
+END SUB
+
+
+builder = gtk_builder_new ()
+'@ change the path to the ui file
+gtk_builder_add_from_file (builder, "builder.ui", NULL)
+
+window = gtk_builder_get_object (builder, "window")
+    g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+
+button1 = gtk_builder_get_object (builder, "button1")
+    g_signal_connect_data(button1, "clicked",button1_cb, 0, 0, 0)
+    
+button2 = gtk_builder_get_object (builder, "button2")
+    g_signal_connect_data(button2, "clicked",button2_cb, 0, 0, 0)
+    
+quit = gtk_builder_get_object (builder, "quit")
+    g_signal_connect_data(quit , "clicked",exit_prog, 0, 0, 0)
+gtk_main
+
+</code>
+
+
+
+
+||*Example code: builder.ui*||
+
+this file gets read in on the fly  to modify the builder compiled app
+
+<code language="xml">
+<interface>
+<object id="window" class="GtkWindow">
+<property name="visible">True</property>
+<property name="title">bacon Grid</property>
+<property name="border-width">10</property>
+<child>
+<object id="grid" class="GtkGrid">
+<property name="visible">True</property>
+<child>
+<object id="button1" class="GtkButton">
+<property name="visible">True</property>
+<property name="label">Button 1</property>
+</object>
+<packing>
+<property name="left-attach">0</property>
+<property name="top-attach">0</property>
+</packing>
+</child>
+<child>
+<object id="button2" class="GtkButton">
+<property name="visible">True</property>
+<property name="label">Button 2</property>
+</object>
+<packing>
+<property name="left-attach">1</property>
+<property name="top-attach">0</property>
+</packing>
+</child>
+<child>
+<object id="quit" class="GtkButton">
+<property name="visible">True</property>
+<property name="label">Quit</property>
+</object>
+<packing>
+<property name="left-attach">0</property>
+<property name="top-attach">1</property>
+<property name="width">2</property>
+</packing>
+</child>
+</object>
+<packing>
+</packing>
+</child>
+</object>
+</interface>
+
+</code>
+
+
+[#TOP Back to top of document]
 
 [#TOP Back to top of document]
