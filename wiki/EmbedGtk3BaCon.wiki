@@ -1811,7 +1811,9 @@ source code converted to PROTO
 ||*Example code: entry-gtk3-proto.bac*||
 
 {{{
-PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`PROTO gtk_init
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+PROTO gtk_init
 PROTO gtk_window_new
 PROTO gtk_main_quit
 PROTO g_signal_connect_data
