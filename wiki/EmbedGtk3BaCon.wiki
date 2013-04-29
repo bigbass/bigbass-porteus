@@ -25,6 +25,7 @@ how to code it with BaCon
 || [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#TOGGLE-SPINNER TOGGLE-SPINNER] ||
 || [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#MENU MENU] ||
 || [#MENU2 MENU2] || [#BUILDER BUILDER] || [#GRID-PACKING GRID-PACKING]||
+|| [#ENTRY ENTRY] ||
 ----
 
 
@@ -1802,13 +1803,70 @@ gtk_main
 
 
 
-== NOTYET ==
+== ENTRY ==
 
-[http://]
+source code converted to PROTO
+[https://developer.gnome.org/gnome-devel-demos/3.5/entry.c.html.en]
 
-||*Example code: notyet.bac*||
+||*Example code: entry-gtk3-proto.bac*||
 
 {{{
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`PROTO gtk_init
+PROTO gtk_window_new
+PROTO gtk_main_quit
+PROTO g_signal_connect_data
+PROTO gtk_main
+PROTO gtk_container_add
+PROTO gtk_container_set_border_width
+PROTO gtk_widget_show_all
+PROTO gtk_window_set_default_size
+PROTO gtk_window_set_title
+PROTO gtk_entry_get_text
+PROTO gtk_entry_new
+
+
+
+'=======================
+SUB EXIT_PROG()
+'=======================
+    gtk_main_quit
+END SUB
+
+
+
+'---This is the callback function. It is a handler function
+'---which reacts to the signal. In this case, it will grab the
+'---text input from the entry box and print out a line to the user.
+'---when you press enter
+
+'=======================
+SUB on_activate
+'=======================
+    name$ = (char *)gtk_entry_get_text (entry_box)
+    PRINT name$
+END SUB
+
+
+
+gtk_init(0, 0)
+
+'---Create a window with a title, a default size,
+'---and a set border width
+window = gtk_window_new ()
+gtk_window_set_title (window, "To get the entry press enter")
+gtk_window_set_default_size (window, 350, 100)
+gtk_container_set_border_width (window, 10)
+g_signal_connect_data(window, "destroy", EXIT_PROG, 0, 0, 0)
+
+'---Create a new entry box, and add it to the window
+entry_box = gtk_entry_new ()
+gtk_container_add (window, entry_box)
+
+'---Connecting the activate signal to the callback
+g_signal_connect_data (entry_box, "activate", on_activate,0,0,0)
+
+gtk_widget_show_all (window)
+gtk_main
 
 }}}
 
