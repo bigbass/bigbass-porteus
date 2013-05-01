@@ -25,7 +25,7 @@ how to code it with BaCon
 || [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#TOGGLE-SPINNER TOGGLE-SPINNER] ||
 || [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#MENU MENU] ||
 || [#MENU2 MENU2] || [#BUILDER BUILDER] || [#GRID-PACKING GRID-PACKING]||
-|| [#ENTRY ENTRY] ||
+|| [#ENTRY ENTRY] || [#PROGRESS PROGRESS] ||
 ----
 
 
@@ -1875,6 +1875,132 @@ gtk_main
 
 [#TOP Back to top of document]
 
+
+== PROGRESS ==
+
+[http://bigbass-porteus.googlecode.com/files/timeout.png]
+
+
+This is how to add a timeout to GTK3
+and use it with PROTO
+
+now the progressbar auto updates automatically
+there wasn't a complete simple example so I had to make one
+
+and notice pointer free code
+
+
+||*Example code: progress-gtk3-proto.bac*||
+
+{{{
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+PROTO gtk_init
+PROTO gtk_window_new
+PROTO gtk_main_quit
+PROTO gtk_main
+PROTO gtk_container_add
+PROTO gtk_grid_attach
+PROTO gtk_grid_attach_next_to
+PROTO gtk_progress_bar_pulse
+PROTO gtk_widget_show_all
+PROTO gtk_window_set_title
+PROTO gtk_application_new
+PROTO gtk_button_new_with_label
+PROTO gtk_grid_new
+PROTO gtk_progress_bar_new
+PROTO gtk_window_new
+PROTO g_signal_connect_data
+PROTO gtk_progress_bar_set_fraction
+PROTO gtk_progress_bar_get_fraction
+PROTO gtk_window_set_default_size
+PROTO  g_timeout_add
+
+GTK_POS_BOTTOM = 3
+
+fraction = 0.1
+
+'---How to use a time out to update a progress bar
+
+
+
+FUNCTION timeout_callback
+
+
+gtk_widget_show_all (progress_bar)
+	gtk_progress_bar_pulse (progress_bar)
+
+	'fraction = gtk_progress_bar_get_fraction (progress_bar)
+
+	'---Increase the bar by 10% each time this function is called
+
+	'---Fill in the bar with the new fraction
+	gtk_progress_bar_set_fraction (progress_bar, fraction)
+
+	fraction = fraction + 0.1
+	IF fraction >= 1 THEN
+		fraction = 0
+	END IF
+
+	RETURN TRUE
+
+END FUNCTION
+
+
+
+'==============
+SUB EXIT_PROG
+'==============
+	gtk_main_quit
+END SUB
+
+
+
+
+gtk_init(0, 0)
+
+
+
+'---Create the window and set a title
+'window = gtk_application_window_new (app)
+window = gtk_window_new ()
+gtk_window_set_title (window, "Progress Example")
+gtk_window_set_default_size (window, 270, 70)
+g_signal_connect_data(window, "destroy", EXIT_PROG, 0, 0, 0)
+
+
+'---Create a button with a label
+button = gtk_button_new_with_label ("QUIT")
+
+'---Create the progress bar
+progress_bar = gtk_progress_bar_new ()
+
+'---Create a grid and attach the button and progress bar accordingly
+grid = gtk_grid_new ()
+gtk_grid_attach (grid, button, 1, 1, 1, 1)
+gtk_grid_attach_next_to (grid, \
+					progress_bar, \
+					button, \
+					GTK_POS_BOTTOM, 1, 1)
+
+'---Connecting the clicked signal to the callback function
+g_signal_connect_data (button, "clicked", EXIT_PROG)
+
+
+g_timeout_add(500, timeout_callback, NULL)
+gtk_container_add (window, grid)
+gtk_widget_show_all (window)
+
+gtk_main
+
+
+}}}
+
+
+[#TOP Back to top of document]
+
+
+[#TOP Back to top of document]
 
 == NOTYET ==
 
