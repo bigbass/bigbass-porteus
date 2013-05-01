@@ -1962,7 +1962,6 @@ gtk_init(0, 0)
 
 
 '---Create the window and set a title
-'window = gtk_application_window_new (app)
 window = gtk_window_new ()
 gtk_window_set_title (window, "Progress Example")
 gtk_window_set_default_size (window, 270, 70)
