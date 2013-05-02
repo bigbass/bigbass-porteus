@@ -1996,7 +1996,7 @@ gtk_main
 
 == EXPANDER ==
 
-[http://]
+[http://bigbass-porteus.googlecode.com/files/exapander.png]
 
 thanks alexfish for this example 
 
