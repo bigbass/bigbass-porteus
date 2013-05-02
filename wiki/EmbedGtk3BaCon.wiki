@@ -1922,27 +1922,23 @@ fraction = 0.1
 
 '---How to use a time out to update a progress bar
 
-
-
+'=============================
 FUNCTION timeout_callback
+'=============================
 
+    gtk_progress_bar_pulse (progress_bar)   
 
-gtk_widget_show_all (progress_bar)
-	gtk_progress_bar_pulse (progress_bar)
+    '---Increase the bar by 10% each time this function is called
 
-	'fraction = gtk_progress_bar_get_fraction (progress_bar)
+    '---Fill in the bar with the new fraction
+    gtk_progress_bar_set_fraction (progress_bar, fraction)
 
-	'---Increase the bar by 10% each time this function is called
-
-	'---Fill in the bar with the new fraction
-	gtk_progress_bar_set_fraction (progress_bar, fraction)
-
-	fraction = fraction + 0.1
-	IF fraction >= 1 THEN
-		fraction = 0
-	END IF
-
-	RETURN TRUE
+    fraction = fraction + 0.1
+    IF fraction >= 1 THEN
+        fraction = 0
+    END IF
+ 
+    RETURN TRUE
 
 END FUNCTION
 
@@ -1951,7 +1947,7 @@ END FUNCTION
 '==============
 SUB EXIT_PROG
 '==============
-	gtk_main_quit
+    gtk_main_quit
 END SUB
 
 
@@ -1959,9 +1955,8 @@ END SUB
 
 gtk_init(0, 0)
 
-
-
 '---Create the window and set a title
+'window = gtk_application_window_new (app)
 window = gtk_window_new ()
 gtk_window_set_title (window, "Progress Example")
 gtk_window_set_default_size (window, 270, 70)
@@ -1978,9 +1973,9 @@ progress_bar = gtk_progress_bar_new ()
 grid = gtk_grid_new ()
 gtk_grid_attach (grid, button, 1, 1, 1, 1)
 gtk_grid_attach_next_to (grid, \
-					progress_bar, \
-					button, \
-					GTK_POS_BOTTOM, 1, 1)
+                     progress_bar, \
+                     button, \
+                     GTK_POS_BOTTOM, 1, 1)
 
 '---Connecting the clicked signal to the callback function
 g_signal_connect_data (button, "clicked", EXIT_PROG)
@@ -1989,7 +1984,6 @@ g_signal_connect_data (button, "clicked", EXIT_PROG)
 g_timeout_add(500, timeout_callback, NULL)
 gtk_container_add (window, grid)
 gtk_widget_show_all (window)
-
 gtk_main
 
 
