@@ -25,7 +25,7 @@ how to code it with BaCon
 || [#DIALOG DIALOG] || [#WINDOW WINDOW] || [#TOGGLE-SPINNER TOGGLE-SPINNER] ||
 || [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#MENU MENU] ||
 || [#MENU2 MENU2] || [#BUILDER BUILDER] || [#GRID-PACKING GRID-PACKING]||
-|| [#ENTRY ENTRY] || [#PROGRESS PROGRESS] ||
+|| [#ENTRY ENTRY] || [#PROGRESS PROGRESS] ||[#EXPANDER EXPANDER] ||
 ----
 
 
@@ -1992,6 +1992,90 @@ gtk_main
 [#TOP Back to top of document]
 
 
+
+
+== EXPANDER ==
+
+[http://]
+
+thanks alexfish for this example 
+
+||*Example code: expander-gtk3-proto.bac*||
+
+{{{
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+'@ Expander demo by alexfish `bacon converter forum`
+
+
+PROTO gtk_init
+PROTO gtk_window_new
+PROTO gtk_main
+PROTO gtk_main_quit
+PROTO gtk_window_set_title
+PROTO gtk_container_add
+PROTO gtk_widget_show_all
+PROTO gtk_window_set_default_size
+PROTO gtk_window_set_title
+PROTO gtk_label_new
+PROTO gtk_expander_new_with_mnemonic
+PROTO gtk_expander_set_expanded
+PROTO gtk_box_new
+PROTO gtk_box_set_homogeneous
+PROTO gtk_box_pack_start
+PROTO g_signal_connect_data
+
+'=====================
+SUB exit_prog
+'=====================
+	gtk_main_quit
+END SUB
+'====================
+    GTK_WINDOW_TOPLEVEL = 0
+    GTK_ORIENTATION_VERTICAL = 1
+
+
+
+gtk_init(0, 0)
+
+window = gtk_window_new (GTK_WINDOW_TOPLEVEL)
+gtk_window_set_title (window, "Expander Example")
+gtk_window_set_default_size (window, 300, 200)
+    g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+    
+box1 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2)
+    gtk_box_set_homogeneous (box1, TRUE)
+
+lab1 = gtk_label_new_with_mnemonic ("BaCon ConVerter")
+    gtk_box_pack_start (box1, lab1, TRUE, TRUE, 2)    
+
+exp_1=gtk_expander_new_with_mnemonic("click me")
+    gtk_box_pack_start (box1, exp_1, TRUE, TRUE, 2)
+    lab2 = gtk_label_new_with_mnemonic ("BaCon is Brill")
+    gtk_container_add(exp_1,lab2)
+
+    gtk_container_add(window,box1)
+    
+gtk_widget_show_all (window)
+gtk_main
+
+}}}
+
+
+[#TOP Back to top of document]
+
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+{{{
+
+}}}
+
+
 [#TOP Back to top of document]
 
 == NOTYET ==
@@ -2007,5 +2091,42 @@ gtk_main
 
 [#TOP Back to top of document]
 
+== NOTYET ==
 
+[http://]
+
+||*Example code: notyet.bac*||
+
+{{{
+
+}}}
+
+
+[#TOP Back to top of document]
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+{{{
+
+}}}
+
+
+[#TOP Back to top of document]
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+{{{
+
+}}}
+
+
+[#TOP Back to top of document]
 [#TOP Back to top of document]
