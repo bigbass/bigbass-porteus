@@ -26,6 +26,7 @@ how to code it with BaCon
 || [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#MENU MENU] ||
 || [#MENU2 MENU2] || [#BUILDER BUILDER] || [#GRID-PACKING GRID-PACKING]||
 || [#ENTRY ENTRY] || [#PROGRESS PROGRESS] ||[#EXPANDER EXPANDER] ||
+||[#SPINBUTTON SPINBUTTON] ||
 ----
 
 
@@ -2065,14 +2066,103 @@ gtk_main
 [#TOP Back to top of document]
 
 
-== NOTYET ==
+== SPINBUTTON ==
 
-[http://]
+source that was ported to PROTO 
+[http://read.pudn.com/downloads154/sourcecode/unix_linux/679094/rule/spinButton.c__.htm]
 
-||*Example code: notyet.bac*||
+
+This is the first example I used pointers and included the gtk.h
+the first time in about 20 examples
+
+(I hope to later convert it to pointer free code )
+
+||*Example code: spinbutton-gtk2-proto.bac*||
 
 {{{
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
+PRAGMA INCLUDE gtk-2.0/gtk/gtk.h
 
+
+PROTO gtk_window_set_title
+PROTO gtk_box_pack_start
+PROTO gtk_container_add
+PROTO gtk_init
+PROTO gtk_main
+PROTO gtk_widget_show
+PROTO gtk_widget_show_all
+PROTO gtk_adjustment_new
+PROTO gtk_button_new_with_label
+PROTO gtk_hbox_new
+PROTO gtk_label_new
+PROTO gtk_spin_button_get_value_as_int
+PROTO gtk_spin_button_new
+PROTO gtk_window_new
+PROTO gtk_main_quit
+PROTO g_signal_connect_data
+PROTO gtk_window_set_default_size
+
+GLOBAL *window TYPE GtkWidget
+GLOBAL *button TYPE GtkWidget
+GLOBAL *label TYPE GtkWidget
+GLOBAL *box TYPE GtkWidget
+GLOBAL *spin TYPE GtkWidget
+
+
+GLOBAL *adjustment TYPE GtkObject
+
+
+'==============
+SUB EXIT_PROG
+'==============
+    gtk_main_quit
+END SUB
+
+
+'==============
+SUB button_event
+'==============
+
+    value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin))
+    PRINT value
+END SUB
+
+
+
+
+gtk_init(0, 0)
+
+window = gtk_window_new(GTK_WINDOW_TOPLEVEL)
+gtk_window_set_default_size (GTK_WINDOW(window), 270, 50)
+
+
+'---Connecting the clicked signal to the callback function
+g_signal_connect_data(window, "destroy", EXIT_PROG, 0, 0, 0)
+
+
+box = gtk_hbox_new(FALSE, 0)
+gtk_container_add(GTK_CONTAINER(window), box)
+
+adjustment = gtk_adjustment_new(2013, 1900, 2100, 1, 1, 0)
+spin = gtk_spin_button_new(GTK_ADJUSTMENT(adjustment), 0.5, 0)
+gtk_box_pack_start(GTK_BOX(box), spin, TRUE, TRUE, 5)
+gtk_widget_show(spin)
+
+label = gtk_label_new("year")
+gtk_box_pack_start(GTK_BOX(box), label, TRUE, TRUE, 0)
+gtk_widget_show(label)
+
+button = gtk_button_new_with_label("button")
+gtk_box_pack_start(GTK_BOX(box), button, TRUE, TRUE, 0)
+
+g_signal_connect_data(button, "clicked", button_event, 0, 0, 0)
+gtk_widget_show(button)
+
+gtk_widget_show(box)
+gtk_widget_show(window)
+
+
+gtk_main 
 }}}
 
 
