@@ -2201,7 +2201,7 @@ original code ported and modified
 [https://developer.gnome.org/gnome-devel-demos/stable/spinbutton.c.html.en]
 
 
-||*Example code: sinbutton-gtk3-proto.bac*||
+||*Example code: spinbutton-gtk3-proto.bac*||
 
 {{{
 PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
