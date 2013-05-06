@@ -28,6 +28,7 @@ how to code it with BaCon
 || [#ENTRY ENTRY] || [#PROGRESS PROGRESS] ||[#EXPANDER EXPANDER] ||
 || [#SPINBUTTON SPINBUTTON] || [#SPINBUTTON3 SPINBUTTON3] ||
 || [#FILESELECT FILESELECT] || [#ASSISTANT ASSISTANT]||[#GLADE1 GLADE1]||
+|| [#GOO-CANVAS GOO-CANVAS] ||
 
 ----
 
@@ -3517,14 +3518,71 @@ DISPLAY
 
 [#TOP Back to top of document]
 
-== NOTYET ==
+== GOO-CANVAS ==
 
-[http://]
+Thanks to 2lss for this example 
+depends on the  goo library
 
-||*Example code: notyet.bac*||
+original source code
+[https://developer.gnome.org/goocanvas/unstable/goocanvas-simple-canvas.html]
+
+||*Example code: goo-canvas-proto.bac*||
 
 {{{
+PRAGMA INCLUDE goocanvas-1.0/goocanvas.h
+PRAGMA LDFLAGS `pkg-config --libs --cflags gtk+-2.0 goocanvas`
 
+' goocanvas
+PROTO goo_canvas_get_root_item, goo_canvas_item_rotate, goo_canvas_item_request_update, goo_canvas_new
+PROTO goo_canvas_rect_new, goo_canvas_set_bounds, goo_canvas_text_new
+
+' gtk
+PROTO gtk_container_add, gtk_init, gtk_main, gtk_scrolled_window_new, gtk_scrolled_window_set_shadow_type, gtk_set_locale
+PROTO gtk_widget_set_size_request, gtk_widget_show, gtk_window_new, gtk_window_set_default_size
+
+' gobject
+PROTO g_signal_connect_data
+
+SUB on_rect_button_press ()
+    PRINT "rect item received button press event"
+END SUB
+
+SUB on_delete_event ()
+    END
+END SUB
+
+GLOBAL *window, *scrolled_win, *canvas TYPE GtkWidget
+GLOBAL *root, *rect_item, *text_item TYPE GooCanvasItem
+
+gtk_init(0, 0)
+
+window = gtk_window_new (GTK_WINDOW_TOPLEVEL)
+gtk_window_set_default_size (GTK_WINDOW(window), 640, 600)
+gtk_widget_show (window)
+
+scrolled_win = gtk_scrolled_window_new (0, 0)
+gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW(scrolled_win), GTK_SHADOW_IN)
+gtk_widget_show (scrolled_win)
+
+gtk_container_add (GTK_CONTAINER(window), scrolled_win)
+
+canvas = goo_canvas_new ()
+gtk_widget_set_size_request (canvas, 600, 450)
+goo_canvas_set_bounds (GOO_CANVAS(canvas), 0, 0, 1000, 1000)
+gtk_widget_show (canvas)
+gtk_container_add (GTK_CONTAINER(scrolled_win), canvas)
+
+root = goo_canvas_get_root_item (GOO_CANVAS(canvas))
+
+rect_item = goo_canvas_rect_new (root, 100, 100, 400, 400, "line-width", 10.0, "radius-x", 20.0, "radius-y", 10.0, "stroke-color", "yellow", "fill-color", "red", 0)
+
+text_item = goo_canvas_text_new (root, "Hello World", 300, 300, -1, GTK_ANCHOR_CENTER, "font", "Sans 24", 0)
+goo_canvas_item_rotate (text_item, 45, 300, 300)
+
+g_signal_connect_data (rect_item, "button_press_event", (GtkSignalFunc) on_rect_button_press, 0, 0, 0)
+g_signal_connect_data (window, "delete_event", (GtkSignalFunc) on_delete_event, 0, 0, 0)
+
+gtk_main()
 }}}
 
 
