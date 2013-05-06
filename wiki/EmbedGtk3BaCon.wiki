@@ -30,11 +30,11 @@ how to code it with BaCon
 || [#FILESELECT FILESELECT] || [#ASSISTANT ASSISTANT]||[#GLADE1 GLADE1]||
 ----
 
-glade2bac   
+*glade2bac *  
 a GUI tool to convert glade files automatically to 
 PROTO format with callbacks semi connected as simple print statements
-|| [#GUI GLADE2BAC GUI GLADE2BAC ] ||
-
+|| [#GUI-GLADE2BAC  GUI-GLADE2BAC  ] ||
+----
 
 == CHECK ==
 
@@ -2970,17 +2970,539 @@ gtk_main
 }}}
 
 
-
+----
 
 [#TOP Back to top of document]
 
-== NOTYET ==
+== GUI-GLADE2BAC ==
 
-[http://]
+[http://bigbass-porteus.googlecode.com/files/GUI-mkglade-proto2.png]
 
-||*Example code: notyet.bac*||
+||*Example code:  GUI-mkglade-proto.bac*||
 
 {{{
+
+' GUI-mkglade-proto.bac
+
+
+INCLUDE "hug.bac"
+INIT
+
+
+
+
+
+' =====================
+' DECLARATIONS
+' =====================
+
+SETENVIRON "OUTPUT_CHARSET", "UTF-8"
+OPTION INTERNATIONAL TRUE
+GLOBAL reccount TYPE NUMBER
+GLOBAL sigcount TYPE NUMBER
+GLOBAL hassignal TYPE NUMBER
+GLOBAL q$, s$, myline$, myline1$, myline2$, myglade$ TYPE STRING
+RECORD glade[1000]
+LOCAL class$ TYPE STRING
+LOCAL id$ TYPE STRING
+LOCAL signal$[100] TYPE STRING
+LOCAL handler$[100] TYPE STRING
+LOCAL wtype TYPE NUMBER
+END RECORD
+
+
+
+
+
+' =====================
+' WINDOW DATA
+' =====================
+DATA "GtkWindow", "GtkDialog", "GtkInvisible", "GtkMessageDialog", "GtkAboutDialog"
+DATA "GtkAssistant", "GtkWindowGroup", "GtkOffscreenWindow", "ENDWIN"
+DATA "GtkDialog" ,"GtkWindow" ,"GtkAssistant " ,"GtkLabel " ,"GtkStatusbar "
+DATA "GtkInfoBar " ,"GtkStatusIcon " ,"GtkButton " ,"GtkRadioButton " ,"GtkToggleButton "
+DATA "GtkScaleButton " ,"GtkEntry " ,"GtkEntryBuffer " ,"GtkEntryCompletion " ,"GtkSpinButton "
+DATA "GtkEditable " ,"GtkTextBuffer " ,"GtkTextTag " ,"GtkTextTagTable " ,"GtkTextView "
+DATA "GtkTreeModel " ,"GtkTreeSelection " ,"GtkTreeViewColumn " ,"GtkTreeView " ,"GtkIconView "
+DATA "GtkTreeSortable " ,"GtkCellRenderer " ,"GtkCellEditable " ,"GtkCellRendererAccel " ,"GtkCellRendererCombo "
+DATA "GtkCellRendererText " ,"GtkCellRendererToggle " ,"GtkComboBox " ,"GtkMenu " ,"GtkMenuItem "
+DATA "GtkRadioMenuItem " ,"GtkCheckMenuItem " ,"GtkToolbar " ,"GtkToolItem " ,"GtkToolPalette " ,"GtkImageMenuItem"
+DATA "GtkToolButton " ,"GtkMenuToolButton " ,"GtkToggleToolButton " ,"GtkUIManager " ,"GtkActionGroup "
+DATA "GtkAction " ,"GtkToggleAction " ,"GtkRadioAction " ,"GtkColorButton " ,"GtkColorSelection "
+DATA "GtkHSV " ,"GtkFileChooser " ,"GtkFileChooserButton " ,"GtkFontButton " ,"GtkInputDialog "
+DATA "GtkLayout" ,"GtkNotebook" ,"GtkExpander" ,"GtkScrolledWindow" ,"GtkPrintOperation"
+DATA "GtkPrinter" ,"GtkPrintJob" ,"GtkAdjustment" ,"GtkCalendar" ,"GtkHandleBox"
+DATA "GtkViewport" ,"GtkContainer" ,"GtkItem" ,"GtkMenuShell" ,"GtkObject"
+DATA "GtkPaned" ,"GtkRange" ,"GtkScale" ,"GtkWidget" ,"GtkIMContext"
+DATA "GtkPlug" ,"GtkSocket" ,"GtkCurve" ,"GtkRecentManager" ,"GtkRecentChooser"
+DATA "GtkCList" ,"GtkCTree" ,"GtkList" ,"GtkListItem" ,"GtkOldEditable"
+DATA "GtkOptionMenu" ,"GtkText" ,"GtkTipsQuery" ,"GtkTree" ,"GtkTreeItem", "ENDSIG"
+
+
+' =====================
+' SUBROUTINES
+' =====================
+
+' -------------
+SUB INIT_VARS()
+' -------------
+    q$ = CHR$(34)
+    s$ = CHR$(92)
+    myline$ = CONCAT$("' ", FILL$(30,45))
+    myline1$ = CONCAT$("' ", FILL$(75,42))
+    myline2$ = CONCAT$("' ", FILL$(40,42))
+    hassignal = 0
+END SUB
+
+
+
+
+' --------------------
+FUNCTION CAT(STRING FILENAME$)
+' --------------------
+    LOCAL fileline$, txt$ TYPE STRING
+    IF FILEEXISTS(FILENAME$) THEN
+        OPEN FILENAME$ FOR READING AS catfile
+        WHILE NOT(ENDFILE(catfile)) DO
+            READLN fileline$ FROM catfile
+            txt$ = CONCAT$(txt$, fileline$, NL$)
+        WEND
+        CLOSE FILE catfile
+    END IF
+    RETURN CHOP$(txt$)
+END FUNCTION
+
+' -------------
+SUB MAKE_READ()
+' -------------
+    LOCAL i
+    gladevar$ = CAT(gladefile$)
+    gladevar$ = REPLACE$(gladevar$, q$,CONCAT$(s$,q$))
+    SPLIT gladevar$ BY NL$ TO gladearray$ SIZE no_of_lines
+    FOR i = 0 TO no_of_lines - 1
+        IF LEN(gladearray$[i]) > 1 THEN
+            WRITELN CONCAT$("DATA ", q$, gladearray$[i], q$) TO fh1
+        END IF
+    NEXT i
+END SUB
+
+' -------------
+SUB READ_GLADE()
+' -------------
+    OPEN gladefile$ FOR READING AS fh
+    reccount = 0
+    sigcount = 0
+    'glade[reccount].wtype = 0
+    WITH glade[reccount]
+        .wtype = 0
+    END WITH
+    WHILE NOT(ENDFILE(fh)) DO
+        READLN txt$ FROM fh
+        IF NOT(ENDFILE(fh)) THEN
+            ' Detect user-defined windows + signals
+            idx = INSTR(txt$, "class=")
+            IF idx > 0 THEN
+                startpos = idx + 7
+                endpos = INSTR(txt$, q$, idx + 8)
+                WITH glade[reccount]
+                    .class$ = MID$(txt$, startpos, endpos - startpos)
+                END WITH
+                'glade[reccount].class$ = MID$ (txt$, startpos, endpos - startpos)
+                REPEAT
+                    READ win$
+                    IF EQUAL(glade[reccount].class$, CHOP$(win$)) THEN
+                        WITH glade[reccount]
+                            'wtype 2 means that the widget has a valid signal
+                            .wtype = 2
+                        END WITH
+                    END IF
+                UNTIL EQUAL(win$,"ENDSIG")
+                RESTORE
+            END IF
+            idx = INSTR(txt$, "id=")
+            IF idx > 0 THEN
+                startpos = idx + 4
+                endpos = INSTR(txt$, q$, idx +5)
+                WITH glade[reccount]
+                    .id$ = REPLACE$(MID$(txt$, startpos, endpos - startpos), "-", "_")
+                END WITH
+                'glade[reccount].id$ = MID$ (txt$, startpos, endpos - startpos)
+            END IF
+            idx = INSTR(txt$, "signal name=")
+            IF idx > 0 THEN
+                startpos = idx + 13
+                endpos = INSTR(txt$, q$, idx +14)
+                WITH glade[reccount]
+                    .signal$[sigcount] = MID$(txt$, startpos, endpos - startpos)
+                END WITH
+                'glade[reccount].signal$[sigcount] = MID$ (txt$, startpos, endpos - startpos)
+            END IF
+            idx = INSTR(txt$, "handler=")
+            IF idx > 0 THEN
+                startpos = idx + 9
+                endpos = INSTR(txt$, q$, idx +10)
+                WITH glade[reccount]
+                    .handler$[sigcount] = MID$(txt$, startpos, endpos - startpos)
+                END WITH
+                'glade[reccount].handler$[sigcount] = MID$ (txt$, startpos, endpos - startpos)
+                ' Detect user-defined window elements
+                win$ = ""
+                REPEAT
+                    READ win$
+                    IF EQUAL(glade[reccount].class$, win$) THEN
+                        WITH glade[reccount]
+                            .wtype = 1
+                        END WITH
+                        'glade[reccount].wtype = 1
+                    END IF
+                UNTIL EQUAL(win$,"ENDWIN")
+                RESTORE
+                INCR sigcount
+            END IF
+            idx = INSTR(txt$, "<child>")
+            IF idx > 0 THEN
+                INCR reccount
+            END IF
+        ENDIF
+    WEND
+    CLOSE FILE fh
+END SUB
+
+' -------------
+SUB WRITE_BAC()
+' -------------
+    OPEN CONCAT$(glade_filenameonly$,"_.bac") FOR WRITING AS fh1
+    
+    
+    WRITELN "PRAGMA LDFLAGS `pkg-config --cflags --libs libglade-2.0`" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "" TO fh1
+    WRITELN myline1$ TO fh1
+    WRITELN "" TO fh1
+    WRITELN "' A utility to read *.glade files and compose callback subs for BaCon." TO fh1
+    WRITELN "" TO fh1
+    WRITELN "' mekanixx, (Puppy Linux forum) - August 2010" TO fh1
+    WRITELN "' vovchik (Puppy Linux forum) - August 2010" TO fh1
+    WRITELN "' bigbass (BaCon forum) - April 21 2013 ported to PROTO and PRAGMA " TO fh1
+    WRITELN "" TO fh1
+    WRITELN CONCAT$("' Created on ", STR$(DAY(NOW)), " ", MONTH$(NOW), " ", STR$(YEAR(NOW))) TO fh1
+    WRITELN "" TO fh1
+    WRITELN "' Check id= statements in glade data and Reference some widgets section" TO fh1
+    WRITELN "' at end for hyphens in function names and references. Change all to underscores!" TO fh1
+    WRITELN myline1$ TO fh1
+    WRITELN "" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN CONCAT$("' Callbacks for file: ", gladefile$) TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "' ERROR HANDLING SET UP" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "TRAP LOCAL" TO fh1
+    WRITELN "CATCH GOTO print_err" TO fh1
+    WRITELN "" TO fh1
+    
+    WRITELN "" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "' DECLARATIONS" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "" TO fh1
+    
+    
+    WRITELN "'==================================" TO fh1
+    WRITELN "'--- EMBED GLADE IMPORTS" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "PROTO glade_require" TO fh1
+    WRITELN "PROTO glade_provide" TO fh1
+    WRITELN "PROTO glade_xml_new" TO fh1
+    WRITELN "PROTO glade_xml_new_from_buffer" TO fh1
+    WRITELN "PROTO glade_xml_construct" TO fh1
+    WRITELN "PROTO glade_xml_construct_from_buffer" TO fh1
+    WRITELN "PROTO glade_xml_signal_connect" TO fh1
+    WRITELN "PROTO glade_xml_signal_connect_data" TO fh1
+    WRITELN "PROTO glade_xml_signal_autoconnect" TO fh1
+    WRITELN "PROTO glade_xml_get_widget" TO fh1
+    WRITELN "PROTO glade_xml_get_widget_prefix" TO fh1
+    WRITELN "PROTO glade_get_widget_name" TO fh1
+    WRITELN "PROTO glade_get_widget_tree" TO fh1
+    WRITELN "PROTO glade_xml_signal_connect_full" TO fh1
+    WRITELN "PROTO glade_xml_signal_autoconnect_full" TO fh1
+    WRITELN "PROTO glade_set_custom_handler" TO fh1
+    WRITELN "PROTO glade_parser_parse_file" TO fh1
+    WRITELN "PROTO glade_parser_parse_buffer" TO fh1
+    WRITELN "PROTO glade_interface_destroy" TO fh1
+    WRITELN "PROTO glade_interface_dump" TO fh1
+    WRITELN "PROTO glade_xml_build_widget" TO fh1
+    WRITELN "PROTO glade_xml_handle_internal_child" TO fh1
+    WRITELN "PROTO glade_xml_set_common_params" TO fh1
+    WRITELN "PROTO glade_register_widget" TO fh1
+    WRITELN "PROTO glade_standard_build_widget" TO fh1
+    WRITELN "PROTO glade_xml_handle_widget_prop" TO fh1
+    WRITELN "PROTO glade_standard_build_children" TO fh1
+    WRITELN "PROTO glade_xml_set_packing_property" TO fh1
+    WRITELN "PROTO glade_register_custom_prop" TO fh1
+    WRITELN "PROTO glade_xml_relative_file" TO fh1
+    WRITELN "PROTO glade_enum_from_string" TO fh1
+    WRITELN "PROTO glade_flags_from_string" TO fh1
+    WRITELN "PROTO glade_xml_set_value_from_string" TO fh1
+    WRITELN "PROTO glade_xml_set_toplevel" TO fh1
+    WRITELN "PROTO glade_xml_ensure_accel" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "" TO fh1
+    
+    
+    
+    
+    WRITELN "'==================================" TO fh1
+    WRITELN "'--- EMBED GTK IMPORTS" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "" TO fh1
+    WRITELN CONCAT$("PROTO ","gtk_main") TO fh1
+    WRITELN CONCAT$("PROTO ","gtk_init") TO fh1
+    WRITELN CONCAT$("PROTO ","gtk_main_quit") TO fh1
+    WRITELN CONCAT$("PROTO ","gtk_widget_show_all") TO fh1
+    WRITELN CONCAT$("PROTO ","gtk_exit") TO fh1
+    WRITELN CONCAT$("PROTO ","g_signal_connect_data") TO fh1
+    WRITELN CONCAT$("PROTO ","g_object_unref") TO fh1
+    ' WRITELN CONCAT$("PROTO ","glade_xml_new") TO fh1
+    
+    WRITELN "" TO fh1
+    
+    WRITELN "" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "' GLADE DATA" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "' this is where the DATA statements go" TO fh1
+    MAKE_READ
+    WRITELN "" TO fh1
+    
+    WRITELN "" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "' SUBS & FUNCTIONS" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "SUB READ_DATA()" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN CONCAT$(TAB$(1),"gladeline$ = ", q$,q$) TO fh1
+    WRITELN CONCAT$(TAB$(1),"REPEAT") TO fh1
+    WRITELN CONCAT$(TAB$(2),"READ gladeline$") TO fh1
+    WRITELN CONCAT$(TAB$(2), "gladedata$ = CONCAT$(gladedata$, gladeline$)") TO fh1
+    WRITELN CONCAT$(TAB$(1),"UNTIL EQUAL(gladeline$, ",q$,"</glade-interface>",q$,")") TO fh1
+    WRITELN "END SUB" TO fh1
+    WRITELN "" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "SUB EXIT_PROG()" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN CONCAT$(TAB$(1),"gtk_main_quit") TO fh1
+    WRITELN "END SUB" TO fh1
+    WRITELN "" TO fh1
+    FOR idx = 0 TO reccount - 1
+        FOR ixh = 0 TO sigcount - 1
+            IF NOT(LEN(glade[idx].signal$[ixh]) EQ 0) THEN
+            WRITELN "" TO fh1
+            WRITELN myline$ TO fh1
+            WRITELN CONCAT$("SUB ", glade[idx].handler$[ixh]) TO fh1
+            WRITELN myline$ TO fh1
+            IF glade[idx].wtype EQ 1 THEN
+                IF EQUAL("destroy",glade[idx].signal$[ixh]) OR EQUAL("destroy_event",glade[idx].signal$[ixh]) THEN
+                    WRITELN CONCAT$(TAB$(1), "gtk_main_quit") TO fh1
+                END IF
+            ELSE
+                WRITELN CONCAT$(TAB$(1), "' Place your code here") TO fh1
+            END IF
+            WRITELN CONCAT$(TAB$(1), "' code for signal ", glade[idx].signal$[ixh]) TO fh1
+            WRITELN CONCAT$(TAB$(1), "PRINT ", q$, glade[idx].signal$[ixh] ,q$) TO fh1
+            WRITELN "END SUB" TO fh1
+            END IF
+        NEXT ixh
+    NEXT idx
+    WRITELN "" TO fh1
+    
+    WRITELN "" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "' MAIN" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "READ_DATA" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "' Initialize Gtk" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "gtk_init(0, 0) " TO fh1
+    WRITELN "" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "' Specify the windows to be shown" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN CONCAT$("xml = glade_xml_new_from_buffer(gladedata$,LEN(gladedata$)",", 0, 0 )") TO fh1
+    ' WRITELN " glade_xml_signal_autoconnect( xml )" TO fh1
+    WRITELN "" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "' Reference some widgets" TO fh1
+    WRITELN myline$ TO fh1
+    FOR ix = 0 TO reccount - 1
+        IF glade[ix].wtype EQ 1 THEN
+            WRITELN CONCAT$(glade[ix].id$, " = glade_xml_get_widget( xml, ", q$,glade[ix].id$,q$, ")") TO fh1
+            FOR ixs = 0 TO sigcount - 1
+            IF NOT(LEN(glade[ix].signal$[ixs]) EQ 0) THEN
+                WRITELN CONCAT$("g_signal_connect_data(",glade[ix].id$,", ",q$,glade[ix].signal$[ixs],q$,", ", glade[ix].handler$[ixs],", 0, 0, 0)") TO fh1
+                END IF
+            NEXT ixs
+        END IF
+    NEXT ix
+    WRITELN "" TO fh1
+    FOR ix = 0 TO reccount - 1
+        IF glade[ix].wtype EQ 2 THEN
+        IF NOT(LEN(glade[ix].id$) EQ 0) THEN
+            WRITELN CONCAT$(glade[ix].id$, " = glade_xml_get_widget( xml, ", q$,glade[ix].id$,q$, ")") TO fh1
+        END IF
+        END IF
+    NEXT ix
+    WRITELN "" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "' Connect some signals " TO fh1
+    WRITELN myline$ TO fh1
+    FOR idx = 0 TO reccount - 1
+        IF glade[idx].wtype EQ 2 THEN
+            FOR ixs = 0 TO sigcount - 1
+            IF NOT(LEN(glade[idx].signal$[ixs]) EQ 0) THEN
+                WRITELN CONCAT$("g_signal_connect_data(",glade[idx].id$,", ",q$,glade[idx].signal$[ixs],q$,", ", glade[idx].handler$[ixs],", 0, 0, 0)") TO fh1
+            END IF
+            NEXT ixs
+        END IF
+    NEXT idx
+    WRITELN "" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "' Display main window(s)" TO fh1
+    WRITELN myline$ TO fh1
+    ' Display windows
+    FOR ix = 0 TO reccount - 1
+        IF glade[ix].wtype EQ 1 THEN
+            WRITELN CONCAT$("gtk_widget_show_all( ",glade[ix].id$,")") TO fh1
+        END IF
+    NEXT ix
+    WRITELN "" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "' unattach xml reference" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "g_object_unref( xml )" TO fh1
+    WRITELN "" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "' The main GUI loop starts" TO fh1
+    WRITELN myline$ TO fh1
+    WRITELN "gtk_main " TO fh1
+    'WRITELN "END" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "" TO fh1
+    
+    WRITELN "" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "' ERROR HANDLER" TO fh1
+    WRITELN "'==================================" TO fh1
+    WRITELN "" TO fh1
+    WRITELN "LABEL print_err" TO fh1
+    WRITELN CONCAT$(TAB$(1), "IF ERROR THEN PRINT ERR$(ERROR)") TO fh1
+    WRITELN "" TO fh1
+    
+    WRITELN "" TO fh1
+    CLOSE FILE fh1
+END SUB
+
+
+
+' -------------
+SUB entry_demo()
+' -------------
+    'clear the edit box
+    TEXT(EDIT_BOX, "")
+    
+    ORIGINAL_FILE$ = CHOP$(GRAB$(My_entry))
+    file_start$ = "file:///"
+    'get rid of drag n drop prefixed file://
+    
+    IF REGEX(ORIGINAL_FILE$ , file_start$) THEN
+        ORIGINAL_FILE$ = REPLACE$(ORIGINAL_FILE$ , file_start$, "/")
+        
+    ELSE
+        ORIGINAL_FILE$ = CHOP$(GRAB$(My_entry))
+        
+    ENDIF
+    
+
+    ORIG$ = ORIGINAL_FILE$
+    
+
+    ' Get the string to convert
+    gladefile$ = ORIG$
+    glade_filenameonly$ = LEFT$(gladefile$, INSTR(gladefile$, ".") - 1)
+    PRINT gladefile$
+    PRINT glade_filenameonly$
+
+    INIT_VARS
+    READ_GLADE
+    WRITE_BAC
+    
+        
+        
+    '--- the filtered or unfiltered file gets passed here
+        
+    '--- get the display info using a system call ---'
+
+    result_input2$ = EXEC$(CONCAT$("cat", " ", glade_filenameonly$ ,"_.bac" ))
+    
+
+    TEXT(EDIT_BOX, result_input2$)
+END SUB
+
+
+
+Mainwin = WINDOW( "GUI mkglade-proto ", 700, 450 )
+
+
+My_entry = ENTRY("", 450, 30)
+ATTACH( Mainwin, My_entry, 20, 40 )
+CALLBACK(My_entry, entry_demo)
+
+
+My_label = MARK( "Drag file name here to convert", 300, 30 )
+ATTACH( Mainwin, My_label, -10, 10)
+FONT(My_label, "sans 12")
+
+
+My_label = MARK( "converted code shown in the box", 300, 30 )
+ATTACH( Mainwin, My_label, 0, 90)
+FONT(My_label, "sans 12")
+
+' formatting changes if you use another label name
+My_label = MARK( "with _.bac added ", 300, 30 )
+ATTACH( Mainwin, My_label, -40 ,110)
+FONT(My_label, "sans 12")
+
+
+EDIT_BOX = EDIT(650, 250)
+ATTACH( Mainwin, EDIT_BOX, 20, 140 )
+
+
+My_btn = STOCK("gtk-convert", 80, 25)
+ATTACH( Mainwin, My_btn, 490, 415 )
+CALLBACK( My_btn, entry_demo)
+
+
+' Create a button.
+My_chk = STOCK("gtk-quit", 80, 25)
+ATTACH( Mainwin, My_chk, 605, 415 )
+
+' Make button do something
+CALLBACK( My_chk, QUIT)
+
+
+DISPLAY
 
 }}}
 
