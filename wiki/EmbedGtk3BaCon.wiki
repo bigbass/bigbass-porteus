@@ -2313,7 +2313,9 @@ gtk_main
 
 [http://bigbass-porteus.googlecode.com/files/fileselect-fixed.png]
 
-||*Example code: fileselect-gtk3-proto.bac*||
+No pointers and built in buttons get connected to to the low level signals
+
+||*Example code: fileselect-gtk2-proto.bac*||
 
 {{{
 
