@@ -28,12 +28,18 @@ how to code it with BaCon
 || [#ENTRY ENTRY] || [#PROGRESS PROGRESS] ||[#EXPANDER EXPANDER] ||
 || [#SPINBUTTON SPINBUTTON] || [#SPINBUTTON3 SPINBUTTON3] ||
 || [#FILESELECT FILESELECT] || [#ASSISTANT ASSISTANT]||[#GLADE1 GLADE1]||
+
 ----
+
+
 
 *glade2bac *  
 a GUI tool to convert glade files automatically to 
 PROTO format with callbacks semi connected as simple print statements
 || [#GUI-GLADE2BAC  GUI-GLADE2BAC  ] ||
+
+
+
 ----
 
 == CHECK ==
