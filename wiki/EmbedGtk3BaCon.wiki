@@ -2576,8 +2576,8 @@ glade.bac isnt a dependency now
 [http://www.basic-converter.org/glade.bac.html]
 
 
-notice that we use libglade-2.0 at compile time 
-PRAGMA LDFLAGS `pkg-config --cflags --libs *libglade-2.0*`
+notice that we use *libglade-2.0* at compile time 
+PRAGMA LDFLAGS `pkg-config --cflags --libs libglade-2.0`
 
 
 
