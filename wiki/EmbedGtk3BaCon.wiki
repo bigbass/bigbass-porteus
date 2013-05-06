@@ -28,7 +28,7 @@ how to code it with BaCon
 || [#ENTRY ENTRY] || [#PROGRESS PROGRESS] ||[#EXPANDER EXPANDER] ||
 || [#SPINBUTTON SPINBUTTON] || [#SPINBUTTON3 SPINBUTTON3] ||
 || [#FILESELECT FILESELECT] || [#ASSISTANT ASSISTANT]||[#GLADE1 GLADE1]||
-|| [#GOO-CANVAS GOO-CANVAS] ||
+|| [#GOO-CANVAS GOO-CANVAS] || [#FILECHOOSER FILECHOOSER]
 
 ----
 
@@ -3591,13 +3591,109 @@ gtk_main()
 [#TOP Back to top of document]
 
 
-== NOTYET ==
+== FILECHOOSER ==
 
-[http://]
+[http://bigbass-porteus.googlecode.com/files/filechooser-gtk3-proto.png]
 
-||*Example code: notyet.bac*||
+||*Example code: filechooser-gtk3-proto.bac*||
 
 {{{
+PRAGMA LDFLAGS pkg-config --cflags --libs gtk+-3.0
+
+PROTO gtk_file_chooser_dialog_new
+PROTO gtk_dialog_run
+PROTO gtk_file_chooser_get_filename
+PROTO gtk_widget_destroy
+PROTO gtk_init
+PROTO gtk_main
+PROTO g_signal_connect_data
+PROTO gtk_main_quit
+PROTO g_timeout_add 
+
+
+
+'--- low level button signals 
+CONST GTK_RESPONSE_OK = -5
+CONST GTK_RESPONSE_CANCEL = -6
+CONST GTK_RESPONSE_CLOSE = -7
+CONST GTK_RESPONSE_DELETE_EVENT = -4
+CONST GTK_RESPONSE_ACCEPT = -3 
+CONST GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER = 3
+CONST GTK_FILE_CHOOSER_ACTION_OPEN = 0
+CONST GTK_FILE_CHOOSER_ACTION_SAVE = 1
+CONST GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER = 2
+CONST GTK_STOCK_CANCEL = "gtk-cancel"
+CONST GTK_STOCK_OPEN = "gtk-open"
+
+
+
+
+'=====================
+FUNCTION exit_prog
+'=====================
+
+	PRINT "HERE"
+	gtk_main_quit
+
+	RETURN TRUE
+END FUNCTION
+
+
+
+'=====================
+SUB file_ok_sel()
+'=====================
+'--- Get the selected filename and print it to the console
+
+	PRINT "you got to the call back file_ok_sel"
+	filename$ =(char *) gtk_file_chooser_get_filename (dialog)
+	PRINT filename$ 
+END SUB
+
+
+
+gtk_init (0, 0)
+
+dialog = gtk_file_chooser_dialog_new ("Open File", \
+					dialog, \
+					GTK_FILE_CHOOSER_ACTION_OPEN, \
+					GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, \
+					GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT, \
+					NULL)
+
+
+
+
+'--- GTK_RESPONSE_ACCEPT
+'--- major work around to connect buttons using the reponses 
+'--- after a modified callback using just the callback name 
+
+IF gtk_dialog_run(dialog) = GTK_RESPONSE_ACCEPT  THEN
+	filename = gtk_file_chooser_get_filename (dialog)
+	PRINT "The low level OK button was pressed "    
+	file_ok_sel
+END IF
+
+
+
+
+'--- GTK_RESPONSE_CANCEL
+'--- major work around to connect buttons using the reponses 
+'--- after a modified callback using just the callback name 
+IF gtk_dialog_run(dialog ) = GTK_RESPONSE_CANCEL  THEN
+	PRINT "The low level CANCEL button was pressed "
+	PRINT "close main window"    
+	exit_prog    
+END IF
+
+
+
+g_signal_connect_data(dialog, "destroy", exit_prog, 0, 0, 0)
+g_timeout_add(500, exit_prog, NULL)
+gtk_widget_destroy (dialog)
+gtk_main 
+
+PRINT "The top level window of the application was closed...Exiting the program"
 
 }}}
 
