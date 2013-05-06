@@ -26,7 +26,7 @@ how to code it with BaCon
 || [#TABS3 TABS3] || [#NOTEBOOK NOTEBOOK] || [#MENU MENU] ||
 || [#MENU2 MENU2] || [#BUILDER BUILDER] || [#GRID-PACKING GRID-PACKING]||
 || [#ENTRY ENTRY] || [#PROGRESS PROGRESS] ||[#EXPANDER EXPANDER] ||
-||[#SPINBUTTON SPINBUTTON]||[#SPINBUTTON3 SPINBUTTON3]|| [#FILESELECT FILESELECT] ||
+||[#SPINBUTTON SPINBUTTON]||[#SPINBUTTON3 SPINBUTTON3]|| [#FILESELECT FILESELECT] ||[#ASSISTANT ASSISTANT]||
 ----
 
 
@@ -2412,6 +2412,154 @@ PRINT "The top level window of the application was closed...Exiting the program"
 
 [#TOP Back to top of document]
 
+== ASSISTANT ==
+
+[http://bigbass-porteus.googlecode.com/files/assistant.png]
+
+Thanks alexfish for this example 
+||*Example code: assistant-gtk3-proto.bac*||
+
+{{{
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+
+'@ ASSISTANT DEMO
+
+PROTO gtk_init
+PROTO gtk_main
+PROTO gtk_main_quit
+PROTO gtk_box_new
+PROTO gtk_box_set_homogeneous
+PROTO gtk_box_pack_start
+
+PROTO gtk_assistant_new
+PROTO gtk_assistant_append_page
+PROTO gtk_assistant_set_page_type
+PROTO gtk_assistant_commit
+PROTO gtk_assistant_set_page_complete
+PROTO gtk_assistant_set_page_type
+PROTO gtk_assistant_set_page_title
+
+PROTO gtk_window_set_title
+PROTO gtk_widget_set_size_request
+
+PROTO gtk_button_new_with_label
+PROTO gtk_label_new_with_mnemonic
+
+PROTO gtk_entry_new
+PROTO gtk_entry_set_text
+
+'@ Note this line may produce err in bacon2 + bacon2.bash
+PROTO gtk_entry_get_text
+
+PROTO gtk_widget_show_all
+
+PROTO g_signal_connect_data
+
+    GTK_WINDOW_TOPLEVEL = 0
+    GTK_ORIENTATION_VERTICAL = 1
+
+    GTK_ASSISTANT_PAGE_CONTENT = 0
+    GTK_ASSISTANT_PAGE_INTRO = 1
+    GTK_ASSISTANT_PAGE_CONFIRM = 2
+    GTK_ASSISTANT_PAGE_SUMMARY = 3
+    GTK_ASSISTANT_PAGE_PROGRESS = 4
+    GTK_ASSISTANT_PAGE_CUSTOM = 5
+
+
+gtk_init(0, 0)
+'=====================
+SUB exit_prog
+'=====================
+	gtk_main_quit
+END SUB
+
+SUB get_name
+    name$ = (char *)gtk_entry_get_text(ent1)
+    name$ = CONCAT$("submit / " ,name$)
+    gtk_entry_set_text(ent2,name$)
+END SUB
+
+SUB submit
+    name$ = (char *)gtk_entry_get_text(ent2)
+    PRINT "Membership Application Approved",NL$,"Latest Member, ",name$
+    '@ quit
+    gtk_main_quit
+END SUB
+
+assist_1 = gtk_assistant_new ()
+    gtk_widget_set_size_request(assist_1,400,300)
+    gtk_window_set_title (assist_1, "GtkAssistant Example")
+    g_signal_connect_data(assist_1, "delete-event", exit_prog, 0, 0, 0)
+    g_signal_connect_data(assist_1, "apply", submit, 0, 0, 0)
+    
+box1 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2)
+    gtk_box_set_homogeneous (box1, TRUE)
+
+box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2)
+    gtk_box_set_homogeneous (box2, TRUE)
+
+box3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2)
+    gtk_box_set_homogeneous (box3, TRUE)
+
+
+box4 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2)
+    gtk_box_set_homogeneous (box4, TRUE)
+
+
+lab1 = gtk_label_new_with_mnemonic ("BaCon ConVerter")
+
+lab2 = gtk_label_new_with_mnemonic ("Bacon is Brill")
+
+lab3 = gtk_label_new_with_mnemonic ("Forum Membership")
+
+ent1=gtk_entry_new()
+gtk_entry_set_text(ent1,"enter name here")
+
+but4 = gtk_button_new_with_label ("OK")
+g_signal_connect_data(but4, "clicked", get_name, 0, 0, 0)
+
+lab5 = gtk_label_new_with_mnemonic ("Submit Aplication")
+ent2 = gtk_entry_new()
+
+    gtk_box_pack_start (box1, lab1, TRUE, TRUE, 2)
+    gtk_box_pack_start (box2, lab2, TRUE, TRUE, 2)
+    gtk_box_pack_start (box3, lab3, TRUE, TRUE, 2)
+    gtk_box_pack_start (box3, ent1, TRUE, TRUE, 2)
+    gtk_box_pack_start (box3, but4, TRUE, TRUE, 2)
+    gtk_box_pack_start (box4, lab5, TRUE, TRUE, 2)
+    gtk_box_pack_start (box4, ent2, TRUE, TRUE, 2)
+        
+page_1 = gtk_assistant_append_page(assist_1,box1)
+gtk_assistant_set_page_title(assist_1,box1,"About")
+gtk_assistant_set_page_type(assist_1, box1 , GTK_ASSISTANT_PAGE_CONTENT)
+gtk_assistant_set_page_complete(assist_1,box1,TRUE)
+
+page_2 = gtk_assistant_append_page(assist_1,box2)
+gtk_assistant_set_page_title(assist_1,box2,"Introduction")
+gtk_assistant_set_page_type(assist_1, box2 , GTK_ASSISTANT_PAGE_INTRO)
+gtk_assistant_set_page_complete(assist_1, box2 ,TRUE)
+
+page_3 = gtk_assistant_append_page(assist_1,box3)
+gtk_assistant_set_page_title(assist_1,box3,"Details")
+gtk_assistant_set_page_type(assist_1, box3 , GTK_ASSISTANT_PAGE_PROGRESS)
+gtk_assistant_set_page_complete(assist_1, box3 ,TRUE)
+
+page_4 = gtk_assistant_append_page(assist_1,box4)
+gtk_assistant_set_page_title(assist_1,box4,"Register")
+gtk_assistant_set_page_type(assist_1, box4 , GTK_ASSISTANT_PAGE_CONFIRM)
+gtk_assistant_set_page_complete(assist_1, box4 ,TRUE)
+
+gtk_widget_show_all (assist_1)
+
+gtk_main
+
+}}}
+
+
+
+
+[#TOP Back to top of document]
+
 == NOTYET ==
 
 [http://]
@@ -2423,6 +2571,6 @@ PRINT "The top level window of the application was closed...Exiting the program"
 }}}
 
 
-[
+
 
 [#TOP Back to top of document]
