@@ -29,7 +29,7 @@ how to code it with BaCon
 || [#SPINBUTTON SPINBUTTON] || [#SPINBUTTON3 SPINBUTTON3] ||
 || [#FILESELECT FILESELECT] || [#ASSISTANT ASSISTANT]||[#GLADE1 GLADE1]||
 || [#GOO-CANVAS GOO-CANVAS] || [#FILECHOOSER FILECHOOSER] ||
-|| [#FSELECT FSELECT] ||
+|| [#FSELECT FSELECT] || [#HSCALE HSCALE] ||
 ----
 
 
@@ -3796,13 +3796,93 @@ PRINT "The top level window of the application was closed...Exiting the program"
 
 [#TOP Back to top of document]
 
-== NOTYET ==
+== HSCALE ==
 
-[http://]
+[http://bigbass-porteus.googlecode.com/files/scale-proto.png]
 
-||*Example code: notyet.bac*||
+||*Example code: hscale-gtk2-proto.bac*||
 
 {{{
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
+
+'--- 
+'---  GTK example with BACON
+'---  March 2009 - PvE.
+'---  Adapted November 2009. adapted for Hscale 2013 alexfish
+'---  Ported to PROTO/PRAGMA/IMPORT syntax 2013 bigbass
+
+
+'---  Get needed functions from GTK
+
+PROTO gtk_table_attach_defaults
+PROTO gtk_window_set_title
+PROTO gtk_button_new_from_stock
+'PROTO gtk_range_get_value
+PROTO gtk_table_new
+PROTO gtk_window_new
+PROTO gtk_container_add
+PROTO gtk_exit
+'PROTO gtk_hscale_new_with_range
+PROTO gtk_init
+PROTO gtk_label_new
+PROTO gtk_widget_show_all
+PROTO gtk_main
+
+PROTO g_signal_connect_data
+
+'----------------------------------------------------
+' get around low level pointers  USING IMPORT
+'----------------------------------------------------
+CONST Gtk$ = "libgtk-x11-2.0.so.0"
+
+
+'-- Get needed functions from GTK using IMPORT
+IMPORT "gtk_hscale_new_with_range(double,double,double)" FROM Gtk$ TYPE long
+IMPORT "gtk_range_get_value(long)" FROM Gtk$ TYPE double
+
+'----------------------------------------------------
+
+'---  Callback for closing window
+SUB exit_prog
+	PRINT "QUIT"
+	gtk_exit(0)
+	
+END SUB
+
+
+
+SUB Changed
+	LOCAL get
+	get = gtk_range_get_value( Hscale )
+	PRINT " CHANGED ",get
+END SUB
+
+'--- Main program starts here
+gtk_init(0, 0)
+
+window = gtk_window_new(0)
+
+gtk_window_set_title(window, "scale PROTO")
+table = gtk_table_new(15, 15, 1)
+gtk_container_add(window, table)    
+Hscale = gtk_hscale_new_with_range(0,1000,1)
+
+
+button = gtk_button_new_from_stock("gtk-quit")
+
+gtk_table_attach_defaults(table, button, 10, 14, 12, 14)
+gtk_table_attach_defaults(table,Hscale, 1, 14, 3, 14)
+
+'--- Use as callback the defined SUB
+g_signal_connect_data(button, "clicked",exit_prog, 0, 0, 0)
+g_signal_connect_data(Hscale, "value-changed", Changed ,0, 0, 0)
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+
+'--- Show whole GUI
+gtk_widget_show_all(window)
+
+gtk_main
 
 }}}
 
