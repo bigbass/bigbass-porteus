@@ -29,7 +29,7 @@ how to code it with BaCon
 || [#SPINBUTTON SPINBUTTON] || [#SPINBUTTON3 SPINBUTTON3] ||
 || [#FILESELECT FILESELECT] || [#ASSISTANT ASSISTANT]||[#GLADE1 GLADE1]||
 || [#GOO-CANVAS GOO-CANVAS] || [#FILECHOOSER FILECHOOSER] ||
-|| [#FSELECT FSELECT] || [#HSCALE HSCALE] ||
+|| [#FSELECT FSELECT] || [#HSCALE HSCALE] || [#SCROLLED SCROLLED] ||
 ----
 
 
@@ -3885,6 +3885,129 @@ gtk_widget_show_all(window)
 gtk_main
 
 }}}
+
+
+[#TOP Back to top of document]
+
+== SCROLLED ==
+
+[http://bigbass-porteus.googlecode.com/files/scrolled-proto.png]
+
+||*Example code: scrolled-gtk3-proto.bac*||
+
+{{{
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+PRAGMA INCLUDE gtk-3.0/gtk/gtk.h
+
+'image used
+'http://bigbass-porteus.googlecode.com/files/images.jpeg
+
+PROTO gtk_container_add
+PROTO gtk_container_set_border_width
+PROTO gtk_scrolled_window_add_with_viewport
+PROTO gtk_scrolled_window_set_policy
+PROTO gtk_widget_show_all
+PROTO gtk_window_set_default_size
+PROTO gtk_window_set_title
+PROTO gtk_image_new_from_file
+PROTO gtk_scrolled_window_new
+PROTO gtk_window_new
+
+PROTO gtk_init
+PROTO gtk_main
+PROTO g_signal_connect_data
+PROTO gtk_main_quit
+
+'--- Declare variables
+DECLARE *window, *scrolled_window, *image TYPE GtkWidget
+
+
+'=====================
+SUB exit_prog
+'=====================
+    gtk_main_quit
+END SUB
+
+
+gtk_init (0,0)
+'--- Create a window with a title, and a default size
+window = gtk_window_new (0)
+gtk_window_set_title (GTK_WINDOW (window), "Scrolled Window Example")
+gtk_window_set_default_size (GTK_WINDOW (window), 230, 200)
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+
+'--- Create the scrolled window. Usually 0 is passed for both parameters so
+'--- that it creates the horizontal/vertical adjustments automatically. Setting
+'--- the scrollbar policy to automatic allows the scrollbars to only show up
+'--- when needed.
+
+scrolled_window = gtk_scrolled_window_new (0, 0)
+'--- Set the border width
+gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 10)
+'--- Extract our desired image from a file that we have
+image = gtk_image_new_from_file ("images.jpeg")
+'--- And add it to the scrolled window
+gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_window), image)
+'--- Set the policy of the horizontal and vertical scrollbars to automatic.
+'--- What this means is that the scrollbars are only present if needed.
+
+gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window), \
+GTK_POLICY_AUTOMATIC, \
+GTK_POLICY_AUTOMATIC)
+
+gtk_container_add (GTK_CONTAINER (window), scrolled_window)
+
+gtk_widget_show_all (window)
+
+gtk_main
+}}}
+
+
+
+
+[#TOP Back to top of document]
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+{{{
+
+}}}
+
+
+
+
+[#TOP Back to top of document]
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+{{{
+
+}}}
+
+
+
+
+[#TOP Back to top of document]
+
+== NOTYET ==
+
+[http://]
+
+||*Example code: notyet.bac*||
+
+{{{
+
+}}}
+
+
 
 
 [#TOP Back to top of document]
