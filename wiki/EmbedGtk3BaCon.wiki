@@ -30,6 +30,7 @@ how to code it with BaCon
 || [#FILESELECT FILESELECT] || [#ASSISTANT ASSISTANT]||[#GLADE1 GLADE1]||
 || [#GOO-CANVAS GOO-CANVAS] || [#FILECHOOSER FILECHOOSER] ||
 || [#FSELECT FSELECT] || [#HSCALE HSCALE] || [#SCROLLED SCROLLED] ||
+|| [#KEYPRESSED KEYPRESSED] ||
 ----
 
 
@@ -3967,13 +3968,70 @@ gtk_main
 
 [#TOP Back to top of document]
 
-== NOTYET ==
+== KEYPRESSED ==
+
+gets key pressed and displays it in terminal
+and in the title 
+*mouse must stay in the window to catch the event 
 
 [http://]
 
-||*Example code: notyet.bac*||
+||*Example code: keypressed-gtk2-proto.bac*||
 
 {{{
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-2.0`
+PRAGMA INCLUDE gtk-2.0/gtk/gtk.h
+
+'--- GTK
+PROTO gtk_init
+PROTO gtk_main
+PROTO gtk_widget_show
+PROTO gtk_window_new
+PROTO gtk_exit
+PROTO gtk_window_set_title
+
+'---extras
+PROTO g_signal_connect_data
+PROTO g_printerr
+
+'--- GDK
+PROTO gdk_keyval_name
+
+
+'--- Declare variables
+DECLARE *window TYPE GtkWidget
+DECLARE *event TYPE GdkEventKey
+
+
+FUNCTION key_event(GtkWidget *widget, GdkEventKey *event)
+
+    g_printerr("%s\n", gdk_keyval_name (event->keyval))
+
+    keypressed$ = gdk_keyval_name (event->keyval)
+    gtk_window_set_title(GTK_WINDOW(window), keypressed$ )
+    RETURN FALSE
+END FUNCTION
+
+
+
+'--- Callback for closing window
+SUB exit_prog
+    PRINT "QUIT"
+    gtk_exit(0)
+END SUB
+
+
+
+
+gtk_init (0, 0)
+window = gtk_window_new (GTK_WINDOW_TOPLEVEL)
+gtk_window_set_title(GTK_WINDOW(window), "get key press")
+
+'--- Use as callback the defined SUB/FUNCTIONS
+g_signal_connect_data(window, "delete-event", exit_prog, 0, 0, 0)
+g_signal_connect_data(window, "key-release-event", G_CALLBACK(key_event) ,0, 0, 0)
+gtk_widget_show (window)
+gtk_main
 
 }}}
 
