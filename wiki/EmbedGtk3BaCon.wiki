@@ -4076,7 +4076,10 @@ gtk_main
 
 [http://bigbass-porteus.googlecode.com/files/scale-gtk3.png]
 
-thank alexfish for adding the callbacks to the code example 
+I ported this from the official GTK3 example from gnome 
+
+*thanks alexfish for adding the callbacks to the code example 
+
 
 ||*Example code: slider-gtk3-proto.bac*||
 
