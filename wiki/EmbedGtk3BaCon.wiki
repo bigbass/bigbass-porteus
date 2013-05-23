@@ -30,7 +30,7 @@ how to code it with BaCon
 || [#FILESELECT FILESELECT] || [#ASSISTANT ASSISTANT]||[#GLADE1 GLADE1]||
 || [#GOO-CANVAS GOO-CANVAS] || [#FILECHOOSER FILECHOOSER] ||
 || [#FSELECT FSELECT] || [#HSCALE HSCALE] || [#SCROLLED SCROLLED] ||
-|| [#KEYPRESSED KEYPRESSED] ||
+|| [#KEYPRESSED KEYPRESSED] ||[#H&VSCALE H&VSCALE] ||
 ----
 
 
@@ -4070,14 +4070,180 @@ gtk_main
 
 [#TOP Back to top of document]
 
-== NOTYET ==
+== H&VSCALE ==
 
-[http://]
 
-||*Example code: notyet.bac*||
+
+[http://bigbass-porteus.googlecode.com/files/scale-gtk3.png]
+
+thank alexfish for adding the callbacks to the code example 
+
+||*Example code: slider-gtk3-proto.bac*||
 
 {{{
+PRAGMA LDFLAGS `pkg-config --cflags --libs gtk+-3.0`
+PRAGMA INCLUDE gtk-3.0/gtk/gtk.h
 
+PROTO gtk_label_set_text
+PROTO gtk_container_add
+PROTO gtk_container_set_border_width
+PROTO gtk_grid_attach
+PROTO gtk_grid_set_column_homogeneous
+PROTO gtk_grid_set_column_spacing
+PROTO gtk_scale_set_digits
+PROTO gtk_widget_set_hexpand
+PROTO gtk_widget_set_valign
+PROTO gtk_widget_set_vexpand
+PROTO gtk_widget_show_all
+PROTO gtk_window_set_default_size
+PROTO gtk_window_set_title
+PROTO gtk_adjustment_new
+PROTO gtk_application_new
+PROTO gtk_window_new
+PROTO gtk_grid_new
+PROTO gtk_label_new
+PROTO gtk_range_get_value
+PROTO gtk_scale_new
+
+'--- added after
+PROTO gtk_init
+PROTO gtk_main
+PROTO g_signal_connect_data
+PROTO gtk_main_quit
+PROTO gtk_scale_get_value_pos
+PROTO gtk_range_get_value
+
+PROTO gtk_scale_set_digits
+PROTO gtk_adjustment_get_value
+
+
+'--- Declare variables
+GLOBAL *window TYPE GtkWidget
+GLOBAL *h_scale TYPE GtkWidget
+GLOBAL *v_scale TYPE GtkWidget
+GLOBAL *hlabel TYPE GtkWidget
+GLOBAL *vlabel TYPE GtkWidget
+GLOBAL *grid TYPE GtkWidget
+
+
+GLOBAL *scale TYPE GtkPositionType
+GLOBAL *pos TYPE GtkPositionType
+
+
+'--- The Adjustment object represents a value
+'--- which has an associated lower and upper bound.
+GLOBAL *Hscale_adjustment TYPE GtkAdjustment
+GLOBAL *Vscale_adjustment TYPE GtkAdjustment
+
+
+'--- This is the callback function. It is a handler function which
+'--- reacts to the signal. with hscale and vscale
+
+'==============
+SUB get_bits_hscale
+'==============
+    LOCAL val TYPE double
+    val=gtk_adjustment_get_value(Hscale_adjustment)
+    PRINT val
+END SUB
+
+
+
+
+'==============
+SUB get_bits_vscale
+'==============
+    LOCAL val TYPE double
+    val=gtk_adjustment_get_value(Vscale_adjustment)
+    PRINT val
+END SUB
+
+
+
+'==============
+SUB EXIT_PROG
+'==============
+    gtk_main_quit
+END SUB
+
+
+gtk_init(0, 0)
+
+
+'--- Create a window with a title and a default size
+window = gtk_window_new (0)
+gtk_window_set_title (GTK_WINDOW (window), "Scale Example GTK3")
+gtk_window_set_default_size (GTK_WINDOW (window), 400, 300)
+gtk_container_set_border_width (GTK_CONTAINER (window), 5)
+'---Connecting the clicked signal to the callback function
+g_signal_connect_data(window, "destroy", EXIT_PROG, 0, 0, 0)
+
+'--- Two labels to be shown in the window
+hlabel = gtk_label_new ("Move the scale handle...")
+vlabel = gtk_label_new ("Move the scale handle...")
+
+
+'--- gtk_adjustment_new takes six parameters, three of which
+'--- may be difficult to understand:
+'--- step increment- move the handle with the arrow keys on your keyboard to see.
+'--- page increment - move the handle by clicking away from it
+'--- on the scale to see.
+'--- page size - not used here.
+
+Hscale_adjustment = gtk_adjustment_new((double)0,(double)0,(double)100,(double)5,(double)10,(double)0)
+
+Vscale_adjustment = gtk_adjustment_new((double)0,(double)0,(double)100,(double)5,(double)10,(double)0)
+
+'--- Create the Horizontal scale, making sure the
+'---digits used have no decimals.
+
+h_scale = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, Hscale_adjustment)
+gtk_scale_set_digits (GTK_SCALE (h_scale), 0)
+
+
+'--- Allow it to expand horizontally (if there's space), and
+'--- set the vertical alignment
+
+gtk_widget_set_hexpand (h_scale, TRUE)
+gtk_widget_set_valign (h_scale, GTK_ALIGN_START)
+
+'--- Connecting the "value-changed" signal for the horizontal scale
+'--- to the appropriate callback function.
+'---take note that GtkRange is part of GtkScale's Object Hierarchy.
+
+
+
+g_signal_connect_data (h_scale, "value-changed", get_bits_hscale, 0, 0, 0)
+
+'--- Create the Vertical scale. This time, we will see what happens
+'--- when the digits arent initially set.
+
+
+v_scale = gtk_scale_new (GTK_ORIENTATION_VERTICAL, Vscale_adjustment)
+gtk_scale_set_digits (GTK_SCALE (v_scale), 0)
+
+gtk_widget_set_vexpand (v_scale, TRUE)
+
+'--- Connecting the "value-changed" signal for the vertical scale to
+'--- the appropriate callback function.
+
+g_signal_connect_data (v_scale, "value-changed", get_bits_vscale, 0, 0, 0)
+
+'--- Create a grid and arrange everything accordingly
+grid = gtk_grid_new ()
+gtk_grid_set_column_spacing (GTK_GRID (grid), 10)
+gtk_grid_set_column_homogeneous (GTK_GRID (grid), TRUE)
+gtk_grid_attach (GTK_GRID (grid), h_scale, 0, 0, 1, 1)
+gtk_grid_attach (GTK_GRID (grid), v_scale, 1, 0, 1, 1)
+gtk_grid_attach (GTK_GRID (grid), hlabel, 0, 1, 1, 1)
+gtk_grid_attach (GTK_GRID (grid), vlabel, 1, 1, 1, 1)
+
+
+gtk_container_add (GTK_CONTAINER (window), grid)
+
+gtk_widget_show_all (window)
+
+gtk_main 
 }}}
 
 
