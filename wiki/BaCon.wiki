@@ -39,7 +39,7 @@ Getting started with sample widgets
 ||*  Example code: hello.bac*||
 
 
-<code language="xml">
+
 
 
 ' BaCon / HUG Hello World
@@ -78,7 +78,7 @@ DISPLAY
 
 
 
-</code>
+
 
 
 
