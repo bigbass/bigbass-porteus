@@ -26,47 +26,57 @@ Getting started with sample widgets
 
 == HELLO ==
 
-[http://bigbass-porteus.googlecode.com/files/hello.png]
+http://bigbass-porteus.googlecode.com/files/hello.png
 
-||*  Example code: hello.bac*||
-
-
+*  Example code: hello.bac*
 
 
 
-' BaCon / HUG Hello World
-' hello.bac
-' Include the files for making a GUI.
-INCLUDE "hug.bac"
-INIT
+
+
+ ' BaCon / HUG Hello World
+ ' hello.bac
+ ' Include the files for making a GUI.
+ INCLUDE "hug.bac"
+ INIT
 
 
 ' 1.) Create your main working window, 250 pixels wide x 100 pixels high
-Mainwin = WINDOW( "Hello Title Bar", 250, 100 )
+
+ Mainwin = WINDOW( "Hello Title Bar", 250, 100 )
 
 
 ' 2. ) Create a label Hello BaCon! with text, 150 x 30
-My_label = MARK( "Hello BaCon!", 150, 30 )
+
+ My_label = MARK( "Hello BaCon!", 150, 30 )
 
 ' 3.) Attach the label to the main window
-ATTACH( Mainwin, My_label, 50, 20 )
 
-' 4.) Create a button
-My_btn = BUTTON( "I'm done", 80, 25)
+ ATTACH( Mainwin, My_label, 50, 20 )
+
+ ' 4.) Create a button
+
+ My_btn = BUTTON( "I'm done", 80, 25)
 
 ' 5.) Attach button to the main window
-ATTACH( Mainwin, My_btn, 10, 60 )
+
+ ATTACH( Mainwin, My_btn, 10, 60 )
 
 ' 6.) Make button do something
-CALLBACK( My_btn, QUIT)
 
-'7.) Create a button.
-My_chk = STOCK("gtk-quit", 80, 25)
-ATTACH( Mainwin, My_chk, 155, 60 )
+ CALLBACK( My_btn, QUIT)
 
-'8.)Make button do something
-CALLBACK( My_chk, QUIT)
-DISPLAY 
+ '7.) Create a button.
+
+ My_chk = STOCK("gtk-quit", 80, 25)
+
+ ATTACH( Mainwin, My_chk, 155, 60 )
+
+ '8.)Make button do something
+
+ CALLBACK( My_chk, QUIT)
+
+ DISPLAY 
 
 
 
