@@ -86,7 +86,7 @@ DISPLAY
 
 ||*Example code: static.bac*||
 
-<code language="xml">
+
 ' static.bac
 ' Include the files for making a GUI.
 INCLUDE "hug.bac"
@@ -119,8 +119,6 @@ ATTACH( Mainwin, My_chk, 155, 60 )
 '8.)Make button do something
 CALLBACK( My_chk, QUIT)
 DISPLAY 
-
-</code>
 
 
 [#TOP Back to top of document]
@@ -1741,7 +1739,7 @@ source the binary to see the selected from the list
 
 || *Example code: bacon-listbox2.bac*|| 
 
-<code language="xml">
+
 ' bacon-listbox2.bac
 
 ' Include the files for making a GUI.
@@ -1798,7 +1796,7 @@ CALLBACK(list_choices, list_choices_demo)
 DISPLAY
 
 
-</code>
+
 
 ----
 
