@@ -131,7 +131,7 @@ CALLBACK( My_chk, QUIT)
 DISPLAY 
 
 
-[#TOP Back to top of document]
+
 
 ----
 
@@ -141,7 +141,6 @@ DISPLAY
 
 ||*Example code: markup-01.bac*||
 
-<code language="xml">
 
 ' markup-01.bac
 ' equivilent gtkdialog 00.01-text_attributes
@@ -187,9 +186,7 @@ CALLBACK( My_close, QUIT)
 
 DISPLAY
 
-</code>
 
-[#TOP Back to top of document]
 
 ----
 
@@ -244,7 +241,7 @@ TEXT(EDIT_BOX, result_input2$)
 DISPLAY
 
 
-</code>
+
 
 [#TOP Back to top of document]
 
@@ -256,7 +253,7 @@ DISPLAY
 
 || *Example code: button-1.00.bac *|| 
 
-<code language="xml">
+
 ' buttons-1.00.bac
 ' equivalent gtkdialog 01.00-button
 ' Include the files for making a GUI.
@@ -384,11 +381,6 @@ ATTACH( Mainwin, My_chk, 165, 60 )
 CALLBACK( My_chk, QUIT)
 DISPLAY
 
-
-</code>
-
-[#TOP Back to top of document]
-
 ----
 
 == CHECKBOX ==
@@ -398,7 +390,7 @@ DISPLAY
 || *Example code: checkbox.bac*|| 
 
 
-<code language="xml">
+
 ' checkbox.bac
 
 ' Include the files for making a GUI.
@@ -425,9 +417,7 @@ CALLBACK(My_checkbox, checkbox_demo)
 
 DISPLAY 
 
-</code>
 
-[#TOP Back to top of document]
 
 ----
 
@@ -437,7 +427,7 @@ DISPLAY
 
 ||*Example code: bacon-entry.bac*||
 
-<code language="xml">
+
 ' bacon-entry.bac
 
 ' Include the files for making a GUI.
@@ -463,9 +453,7 @@ CALLBACK(My_entry, entry_demo)
 
 DISPLAY
 
-</code>
 
-[#TOP Back to top of document]
 
 ----
 
@@ -652,9 +640,6 @@ ATTACH( Mainwin, My_chk, 165, 145 )
 CALLBACK( My_chk, QUIT)
 DISPLAY 
 
-</code>
-
-[#TOP Back to top of document]
 
 ----
 
@@ -676,7 +661,7 @@ DISPLAY
 
 || *Example code: **bacon-icon-kde4.bac*|| 
 
-<code language="xml">
+
 ' BaCon
 ' Add images as buttons and tool-tips 3x5 format using 32x32 pixel icons
 ' bacon-icon-kde4.bac
@@ -889,9 +874,7 @@ ATTACH(Mainwin, Close_btn, 290, 365)
 CALLBACK(Close_btn, QUIT)
 
 DISPLAY
-</code>
 
-[#TOP Back to top of document]
 ----
 
 == RADIOBOX ==
@@ -930,9 +913,7 @@ CALLBACK(My_radiobox, radiobox_demo)
 
 DISPLAY
 
- </code>
-
-[#TOP Back to top of document]
+ 
 
 ----
 
@@ -978,9 +959,7 @@ CALLBACK(My_listbox, My_listbox_demo)
 
 DISPLAY
 
-</code>
 
-[#TOP Back to top of document]
 
 ----
 
@@ -992,7 +971,7 @@ DISPLAY
 
 || *Example: bacon-combobox.bac*|| 
 
-<code language="xml">
+
 ' bacon-combobox.bac
 
 ' Include the files for making a GUI.
@@ -1027,9 +1006,7 @@ CALLBACK(My_combobox, My_combobox_demo)
 
 DISPLAY
 
-</code>
 
-[#TOP Back to top of document]
 
 ----
 
@@ -1042,7 +1019,7 @@ DISPLAY
 
 || *Example: bacon-msgdialog.bac*|| 
 
-<code language="xml">
+
 'bacon-msgdialog.bac
 
 'Include the files for making a GUI.
@@ -1085,9 +1062,9 @@ msgbox1 = MSGDIALOG(CONCAT$("First line \n", \
 CALLBACK(msgbox1, close_dialog)
 DISPLAY
 
-</code>
 
-[#TOP Back to top of document]
+
+
 
 ----
 
@@ -1104,7 +1081,7 @@ DISPLAY
 
 ||*Example: bacon-edit.bac*||
 
-<code language="xml">
+
 ' bacon-edit.bac
 
 ' Include the files for making a GUI.
@@ -1144,7 +1121,7 @@ ATTACH( Mainwin, My_chk, 255, 165 )
 CALLBACK( My_chk, QUIT)
 DISPLAY
 
- </code>
+
 
 == EDIT2 ==
 
@@ -1154,7 +1131,7 @@ DISPLAY
 
 || *Example: bacon-edit2.bac*|| 
 
-<code language="xml">
+
 ' bacon-edit2.bac
 
 ' Include the files for making a GUI.
@@ -1202,9 +1179,7 @@ TEXT(EDIT_BOX, NL$)
 TEXT(EDIT_BOX, result_input2$)
 DISPLAY
 
-</code>
 
-* *[#TOP Back to top of document]
 ----
 
 == RESIZE-WINDOW ==
@@ -1226,9 +1201,7 @@ INIT
     
 DISPLAY
 
-</code>
 
-[#TOP Back to top of document]
 
 ----
 
@@ -1240,7 +1213,7 @@ DISPLAY
 
 ||  *Example: bacon-spin.bac*|| 
 
-<code language="xml">
+
 
 '  bacon-spin.bac
 
@@ -1285,9 +1258,7 @@ CALLBACK(GET_NUMBER, My_SPINBOX)
 
 DISPLAY
 
-</code>
 
-[#TOP Back to top of document]
 
 ----
 
@@ -1297,7 +1268,7 @@ DISPLAY
 
 || *Example: bacon-vslider.bac* || 
 
-<code language="xml">
+
 
 ' bacon-vslider.bac
 
@@ -1346,11 +1317,6 @@ CALLBACK(GET_NUMBER, My_VSLIDER)
 
 DISPLAY
 
-</code>
-
-
-[#TOP Back to top of document]
-
 ----
 
  == HSLIDER ==
@@ -1359,7 +1325,7 @@ DISPLAY
 
 ||*Example: bacon-hslider.bac* ||
 
-<code language="xml">
+
 ' bacon-hslider.bac
 
 ' Include the files for making a GUI.
@@ -1407,9 +1373,7 @@ CALLBACK(GET_NUMBER, My_HSLIDER)
 
 DISPLAY
 
-</code>
 
-[#TOP Back to top of document]
 
 ----
 
@@ -1442,7 +1406,7 @@ DISPLAY
 
 || *Example: bacon-progressbar.bac*|| 
 
-<code language="xml">
+
 
 'progressbar-demo.bac
 INCLUDE "hug.bac"
@@ -1464,9 +1428,7 @@ ATTACH(win, pb, 0, 0)
 TIMEOUT(100, set_value)
 DISPLAY
 
-</code>
 
-[#TOP Back to top of document]
 
 ----
 
@@ -1542,9 +1504,7 @@ INIT
 DISPLAY
 
 
-</code>
 
-[#TOP Back to top of document]
 ----
 
  == SPINNER ==
@@ -1560,7 +1520,7 @@ DISPLAY
  just have it in the same place as *spinner-HUG-convertered.bac* when
  you compile
 
-<code language="xml">
+
 'spinner_INCLUDE.bac
 INCLUDE "hug.bac", INIT, WINDOW, BUTTON, HUGLIB$, METHOD, REGISTER, SET, ATTACH, CALLBACK, QUIT, DISPLAY
 CONST gtk$ = HUGLIB$("gtk")
@@ -1605,11 +1565,10 @@ RETURN widget
 END FUNCTION
 
 
-</code>
 
 ||*Example: spinner-HUG-convertered.bac* this gets compiled||
 
-<code language="xml">
+
 'spinner-HUG-convertered.bac
 'depends on spinner_INCLUDE.bac
 
@@ -1658,9 +1617,9 @@ MK_GUI
 DISPLAY
 
 
-</code>
 
-[#TOP Back to top of document]
+
+
 ----
 
 == DYNAMIC-COMBO ==
@@ -1674,7 +1633,7 @@ DISPLAY
 
 ||*Example code: bacon-combobox.bac*||
 
-<code language="xml">
+
 ' bacon-combobox.bac
 
 ' Include the files for making a GUI.
@@ -1729,12 +1688,7 @@ MAKE_FILE_LIST
 
 ATTACH(Mainwin, combo_choices,5, 30)
 CALLBACK(combo_choices, combo_choices_demo)
-
-DISPLAY 
-
-</code>
-
-[#TOP Back to top of document]
+DISPLAY
 
 ----
 
@@ -1810,4 +1764,3 @@ DISPLAY
 
 ----
 
-[#TOP Back to top of document]
